@@ -1,0 +1,97 @@
+Date: Fri, 25 Apr 2008 12:48:32 +0000
+Categories: rails
+Summary: Quando se precisa prover busca em um sistema simples, uma boa forma de fugir dos mecanismos complexos é apostar no MySQL
+
+# Sistema de busca Full-Text no Rails usando MySQL
+
+
+Quando desenvolvemos sistemas web, é bem comum que já no levantamento de [histórias][1]da primeira iteração, alguém grite lá no fundo:
+
+> "Não esqueçam que o sistema deve ter um mecanismo de busca"[][2]
+
+
+Não importa se estamos fazendo um [grande indexador de blogs][3] ou um pequeno sistema de locadora, a funcionalidade de busca é extremamente comum. Mecanismos de buscas trazem segurança ao usuário, é uma questão de usabilidade ter sempre uma caixa com essa finalidade no canto superior direito do site.
+
+Como estamos desenvolvendo em [RubyOnRails][4], teríamos algumas possibilidades de implementação um tanto quando sofisticadas, com criação de arquivos de índices e resultados ordenados por relevância, para citar algumas funções. Tudo isso com a simplicidade de instalar uma [gem][5] e um plugin. [Ferret][6] e [Sphinx][7] são bons exemplos desse tipo de gem. Ambas têm atrativos a performance e a escalabilidade.
+
+Decidi pelo Ferret em meu projeto e comecei a vivenciar alguns problemas, como a falta suporte a UTF-8 no Windows, problemas na busca por palavras no plural, acentuadas, ou com case diferente do indexado e principalmente, a necessidade de um processo exclusivo para a atualização dos índices, pois ocorrem erros se vários processos tentarem escrever no índice, o que atrapalha muito quando se usa uma hospedagem compartilhada. Encontrei desenvolvedores na internet [dizendo para deixar o Ferret e usar o Sphinx][8], devido a sua instabilidade em ambiente de produção. Diante da inevitável mudança e retrabalho, me fiz a seguinte pergunta:
+
+> Eu realmente preciso de todas essas funcionalidades e de toda essa performance? 
+
+Como sabemos quanto mais funcionalidades, mais complicado fica o sistema de manter e de alterar (vide a lei "Menos Massa" do livro [Caindo na Real][9]). Ainda seguindo as práticas do "caindo na real", fiquei convencido de que o melhor a fazer era deixar meu sistema começar pequeno, em uma hospedagem compatilhada e rodando em fastcgi ou em [mod_rails][10]. Este é um conceito que gosto bastante, escalabilidade só deve ser um problema quando a aplicação tiver número de usuários suficiente para tal.
+
+Passei a procurar uma solução mais simples que me atendesse e encontrei o plugin [acts_as_fulltextable][11], que não usa nenhuma gem extra.
+
+> Mas apenas um plugin para realizar buscas? Sem gems? Deve ficar extremamente  lento...
+
+Para minha surpresa a solução se mostrou extremamente eficaz. O plugin faz uso de uma funcionalidade do MySQL chamada Full-Text Search. Trata-se de um tipo especial de índice de banco que pode ser aplicado a tabelas MyISAM em campos CHAR,VARCHAR e TEXT. Assim, as buscas passam a ser feitas diretamente pelo MySQL, através de instrução MATCH() ... AGAINST, como pode ser entendido lendo-se a [documentação][12]. O que o plugin faz é criar uma tabela extra, com os campos escolhidos em cada Model e aplicar esse tipo de índice. Vamos ao passos para usá-lo.
+
+Instalando o **acts_as_fulltextable**:
+
+		:::bash
+		script/plugin install http://wonsys.googlecode.com/svn/plugins/acts_as_fulltextable/ 
+
+
+Para adicionar atributos dos models ao índice, é necessário que a linha abaixo esteja no código da classe Model (arquivo Model.rb):
+
+		:::ruby
+		acts_as_fulltextable :atributo1, :atributo2, :atributo3
+
+
+Depois, cria-se uma migration através do gerador que acompanha o plugin, passando os models com campos indexados:
+
+		:::bash
+		script/generate fulltext_rows model1 model2 model3 ...
+
+
+Atualizamos a estrutura do banco:
+
+		::bash
+		rake db:migrate
+
+E pronto, magicamente podemos chamar os métodos em nossos controllers
+
+		:::ruby
+		Model.find_fulltext('string de busca', :limit => 10, :offset => 0)
+
+Para buscar em um Model específico, limitando o número de respostas em 10, 
+ou ainda
+
+		:::ruby
+		FulltextRow.search('string de busca', :only => [:model1, :model2, :model3], :limit => 10, :offset => 0)
+
+Para procurar em todos os models indexados, ou naqueles indicados em :only.
+
+> Acabei de criar um novo Model, como adiciono na tabela de índice?
+
+Simples, basta colocar a seguinte linha na sua migration, substituindo NewModel pelo seu Model:
+
+		:::ruby
+		NewModel.find(:all).each {|i| i.create_fulltext_record}
+
+
+> Quero paginar o resultado da busca com will_paginate. Tem como?
+
+A versão que está no repositório dos desenvolvedores já suporta will_paginate. Existe um código que verifica se o will_paginate está instalado e mostra o resultado através do seu método paginate. Logo, pode-se trocar os parâmetros :limit e :offset por :page normalmente:
+
+		:::ruby
+		FulltextRow.search('string de busca', :only => [:model1, :model2, :model3], :page => params[:page])[/sourcecode]
+
+
+Se você está com problemas em implementar uma busca em seus site que seja case-insensitive e que ignore acentuação automaticamente, aceitando caracteres UFT-8, além de ser fácil de instalar e configurar, o acts_as_fulltextable foi feito pra você. 
+
+
+
+[1]: http://www.improveit.com.br/xp/praticas/historias
+[2]: http://flavio.files.wordpress.com/2008/04/search_bar.jpg
+[3]: http://www.blogblogs.com.br/
+[4]: http://www.rubyonrails.org/
+[5]: http://docs.rubygems.org/
+[6]: http://projects.jkraemer.net/acts_as_ferret/
+[7]: http://www.datanoise.com/articles/2007/3/23/acts_as_sphinx-plugin
+[8]: http://groups.google.com/group/rubyonrails-deployment/browse_thread/thread/980fe7cb20cb97dd
+[9]: http://http://gettingreal.37signals.com/GR_por.php#ch03
+[10]: http://www.modrails.com/
+[11]: http://blog.wonsys.net/posts/26-our-first-plugin-/
+[12]: http://dev.mysql.com/doc/refman/5.0/en/fulltext-search.html
+

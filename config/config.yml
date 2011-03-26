@@ -1,7 +1,7 @@
 # Title and subheading for your site. Used on the home page and in page
 # titles.
 #
-title: "FlavioGranero"
+title: "Flavio Granero"
 subtitle: "A developer having fun with Ruby (on Rails) in full time"
 
 # You should really specify your content's author when generating an
@@ -26,7 +26,7 @@ theme: fg
 # site's short name here. A comment form will automatically be added to
 # the bottom of your pages.
 #
-# disqus_short_name: mysite
+disqus_short_name: flaviogranerocom
 
 # cache
 #     Set it to true if you'd like Nesta to cache your pages in ./public.
@@ -42,7 +42,7 @@ cache: false
 #     your actual content and the (optional) menu.txt file that links to your
 #     main category pages.
 #
-content: content-demo
+content: content
 
 # google_analytics_code
 #     Set this if you want Google Analytics to track traffic on your site.

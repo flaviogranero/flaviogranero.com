@@ -1,0 +1,49 @@
+Date: Tue, 25 Nov 2008 22:29:29 +0000
+Categories: rubyconf, job
+Summary: O maior evento sobre Ruby on Rails do Brasil e meu primeiro emprego para trabalhar com a tecnologia
+
+# Rails Summit: Emprego Novo!
+
+
+Você pode estar pensando:
+
+> Mais um post sobre a Rails Summit? Não está um pouco atrasado não?
+
+Atrasado, pode ser, mas foi porque estava esperando um bom momento para publicá-lo. 
+
+Foram 5 anos de desenvolvimento Delphi, onde eu tive o prazer de trabalhar com uma equipe muito competente e inovadora. Os desenvolvedores Delphi são normalmente taxados como "pregadores de botão", por desenvolvedores de outras linguagens. Mas no caso da nossa equipe isso não acontecia. Com foco no desenvolvimento de ferramentas e frameworks, estávamos sempre buscando e aplicando práticas modernas de desenvolvimento e gerenciamento. E foi esse ambiente que me prendeu por esse tempo.
+
+Mas agora chega a hora de novos desafios. Venho usando Ruby on Rails já há mais de 2 anos, apenas em projetos pessoais, desenvolvidos em meu tempo livre. A tecnologia me chamou tanto a atenção que passei a usá-la em aplicações, a escrever textos esporádicos aqui no blog, a participar da comunidade, me preparando para conseguir uma oportunidade de usá-la em tempo integral.
+
+A oportunidade apareceu justamente durante a [Rails Summit][1]. Confesso que quando me inscrevi para o evento, eu sabia que essa seria uma ótima chance de conhecer de perto outros desenvolvedores e buscar oportunidades. Muito se falou sobre o evento, foram [muitos posts][2], [fotos][3] e [twitts][4] destacando a qualidade das palestras e da organização, o que é realmente indiscutível e não pretendo ser repetitivo aqui. Mas além de tudo isso, para mim o evento teve essa outra face. Durante um dos intervalos entre as palestras, estava conversando com o pessoal da caravana paranaense e conhecemos [Chad DePue][5], um americano residente em Buenos Aires que estava participando do evento e a procura de railers para trabalho remoto. Eu, logicamente, me candidatei =D. 
+
+[![Chad DePue na Rails Summit][6]][7]
+
+Depois do evento, tivemos algumas conversas e testes e agora posso dizer que sou o mais novo desenvolvedor da [Reach Network][8], empresa sediada em Seattle, a qual o Chad presta serviços através da sua consultoria, a [Inaka Networks][9]. 
+
+Estou muito satisfeito em começar essa nova fase na minha carreira e gostaria de agradecer a toda a comunidade Rails que é muito receptiva e prestativa, especialmente aos [Railers do paraná][10] que conheci melhor durante o evento e ao [Fábio Akita][11], por organizar um evento de tão alto nível como foi a Rails Summit. Além desses, uma figura importantíssima nesta mudança foi o Ozéias do [RailsBox][12], que organizou muito bem a caravana paranaense e me deu várias dicas sobre trabalho remoto, valeu cara!
+
+[![Caranava Paranaense][13]][14]
+_Caravana paranaense (com alguns catarinenses também)_
+
+O evento superou as minhas expectativas, mas como sugestão para o próximo, espero que possamos ter avatares nos crachás e camisetas nerds para comprar =D
+
+Valeu galera e até o próximo evento.
+
+
+
+[1]: http://locaweb.com.br/railssummit/
+[2]: http://www.akitaonrails.com/2008/11/12/rails-summit-blogosfera
+[3]: http://flickr.com/photos/tags/railssummit/
+[4]: http://search.twitter.com/search?q=railssummit
+[5]: http://rubyrescue.com/
+[6]: http://flavio.files.wordpress.com/2008/11/3022990114_2be03efd38.jpg?w=300 (Chad DePue na Rails Summit)
+[7]: http://flavio.files.wordpress.com/2008/11/3022990114_2be03efd38.jpg
+[8]: http://reachnetwork.com/
+[9]: http://inakanetworks.com/
+[10]: http://groups.google.com/group/pr-on-rails
+[11]: http://www.akitaonrails.com/
+[12]: http://railsbox.org/
+[13]: http://farm4.static.flickr.com/3010/2951409275_3ef89e89f2.jpg (Caranava Paranaense)
+[14]: http://www.flickr.com/photos/maltempe/tags/railssummit/
+

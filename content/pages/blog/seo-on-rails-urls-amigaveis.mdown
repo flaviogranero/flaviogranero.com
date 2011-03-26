@@ -1,0 +1,115 @@
+Date: Thu, 09 Oct 2008 03:04:30 +0000
+Categories: rails, seo
+Summary: Dicas de como ter URLs mais direcionadas a mecanismos de busca em uma aplicação Rails
+
+# SEO on Rails: URLs Amigáveis
+
+
+Deixar as URLs de sua aplicação amigáveis pode fazer uma grande diferença no ranking dos mecanismos de busca. Isso significa fazer com as URLs fiquem mais simples, criando endereços que sejam legíveis e que tragam alguma informação sobre o conteúdo da página.
+
+Vejamos alguns exemplos de URLs complexas:
+
+> index.php?section=cine&category=comedy
+
+ou
+
+> /cgi-bin/index.cgi?id=6F7YCH&page=6
+
+### Quais os problemas de ter URLs complexas?
+
+1. A complexidade da URL torna o endereço difícil de memorizar
+2. Em alguns casos fica difícil de saber o que você vai encontrar antes de clicar em um link desse tipo
+3. A tecnologia utilizada pelo aplicativo fica exposta
+4. Se a tecnologia utilizada no site tiver que ser alterada (php para ruby, por exemplo), todas as URLs antigas ficarão inválidas
+
+
+### A solução com Rails
+
+Para quem usa Rails, principalmente da maneira [Restful][1], já tem esses problemas minimizados. Basta fazer um scafold e as URLs para as actions já ficam em um formato simples, como no nosso exemplo de locadora abaixo:
+
+Lista de filmes
+
+> http://locadora.com/filmes
+
+Detalhes de um filme com id igual a 12
+
+> http://locadora.com/filmes/12
+
+Novo filme
+
+> http://locadora.com/filmes/new
+
+Edição de um filme com id igual a 12
+
+> http://locadora.com/filmes/12/edit
+
+
+Esse é um dos conceitos de [REST][2]: a URL deve descrever o recurso disponibilizado. 
+
+Acha que está bom? Está, mas podemos melhorar ainda mais. Não seria melhor se ao invés de identificadores numéricos, tivéssemos o próprio título do filme na URL? Por exemplo, a página com detalhes do filme teria a endereço:
+
+> http://locadora.com/filmes/de-volta-para-o-futuro
+
+Existem algumas maneiras de fazer isso em um aplicação Rails. Uma bem simples é instalando o plugin [permalink_fu][3]:
+
+		::bash
+		$ script/plugin install git://github.com/cyu/permalink_fu 
+
+
+Depois de instalado, basta fazer a seguinte chamada nosso Model Filme, para usar o campo título como identificador na URL:
+
+		:::ruby
+		class Filme 
+			has_permalink :titulo
+		end
+
+
+Logicamente o campo título terá seus caracteres especiais e espaços removidos para poder ser usado como endereço http.
+
+Essa abordagem só é viável quando o título do filme é único, pois ficaria impossível distinguir entre dois filmes com o mesmo título, já que ambos teriam a mesma URL. Para estes casos, podemos sobrescrever o método **to_params**, usando o helper **PermalinkFu.escape** do plugin para remover acentos e espaços do campo que queremos usar na composição do endereço:
+
+		:::ruby
+		class Filme 
+			def to_param
+				"#{id}-#{PermalinkFu.escape(titulo)}"
+			end
+		end
+
+
+Assim, teríamos o formato:
+
+> http://locadora.com/filmes/12-de-volta-para-o-futuro
+
+Essa solução causa um pequeno efeito colateral, já que o parâmetro recebido pelo controller em **params[:id]** não terá apenas um valor do tipo inteiro, mas sim uma string. Observe o exemplo de método show do controller de filmes:
+
+		:::ruby
+		class FilmesController 
+ 			def show
+ 				@filmes = Filme.find(params[:id].to_i)
+				respond_to do |format|
+					format.html # show.rhtml
+					format.xml { render :xml => @filmes.to_xml }
+				end
+			end
+		end
+
+
+Note que é necessário uma conversão do paramêtro ID para o tipo inteiro, em **params[:id].to_i**, para que o **find** funcione corretamente.
+
+O uso de URLs amigáveis, além de deixar os endereços de sua aplicação mais fáceis de entender e de lembrar, também fazem com que o posicionamento nos buscadores melhore, já que palavras chave pesquisadas passam a aparecer também nos seus links.
+
+Leia mais sobre o uso de URLs amigáveis:
+
+1. [Criando URLs amigáveis em brunotorres.net][4]
+2. [Better Search Engine Friendly URL’s with Ruby on Rails][5]
+3. [SEO Optimization of URLs in Rails with to_param][6]
+
+
+
+[1]: http://www.brunocarvalho.com/02/06/2007/restful-ruby-on-rails/
+[2]: http://pt.wikipedia.org/wiki/REST
+[3]: http://github.com/technoweenie/permalink_fu
+[4]: http://brunotorres.net/urls
+[5]: http://www.tonyspencer.com/2007/02/04/better-search-engine-friendly-urls-with-ruby-on-rails/ (Better Search Engine Friendly URL’s with Ruby on Rails)
+[6]: http://www.jroller.com/obie/entry/seo_optimization_of_urls_in
+

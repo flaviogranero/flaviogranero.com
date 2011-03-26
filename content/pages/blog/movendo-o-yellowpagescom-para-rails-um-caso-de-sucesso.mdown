@@ -1,0 +1,96 @@
+Date: Thu, 26 Jun 2008 17:27:04 +0000
+Categories: rails, case
+Summary: Como o YellowPages.com migrou de Java para Ruby e continuou atendendo 48 milhões de requisições por dia
+
+# Movendo o YellowPages.com para Rails: Um caso de sucesso
+
+
+Diante de tanta polêmica sobre o [possível][1] [problema][2] de [escalabilidade][3] do Rails, que seria a causa da instabilidade do [Twitter][4], na [RailsConf 2008][5] aconteceram várias apresentações tentando desmistificar o fato, mostrando maneiras de projetar aplicações que suportem milhares ou até milhões de requisições por dia.
+
+Nada melhor que demonstrar isso e mais uma série de vantagens do Rails com um caso de uso real. Foi o que fez [John Straw][6], arquiteto de software chefe da [YellowPages.com][7], com a apresentação "[Sobrevivendo a uma grande reescrita - Movendo YellowPages.com para Rails][8]". A minha intenção com este post é fazer uma tradução livre e resumida de seus tópicos.![Páginas amarelas][9] 
+
+Para quem não conhece, a YellowPages.com é o site das "páginas amarelas" dos Estados Unidos. O equivalente a [Telelistas.net][10] só que, acredito eu, com números mais expressivos: 23 milhões de visitantes por mês, 2 milhões de buscas por dia, mais de 48 milhões de requisições por dia, sendo mais de 1500 por segundo.
+
+A chamada "Grande reescrita" começou no final de 2006. O sistema existente era escrito em Java, com 125.000 linhas de código, e mantido por consultores externos. Em apenas três meses de desenvolvimento, uma equipe de 20 pessoas (sendo apenas 5 desenvolvedores) portou o sistema para Rails, resultando em apenas 20.000 linhas código. O que impressiona é que a equipe havia estimado o prazo de 1 ano para a tarefa.
+
+#### Mas por que decidiram reescrever o sistema?
+
+O sistema do YellowPages já estava sem mudanças de design desde 2003 e, de acordo com testes de usabilidade, a experiência que o usuário tinha ao navegar não era satisfatória.
+
+Além do design, a plataforma era difícil de manter, de aplicar técnicas de [SEO][11] e a implementação de sessões tornava o sistema difícil de escalar horizontalmente. O código estava cheio de remendos e não havia testes, fazendo da tarefa de adicionar novas funcionalidades algo muito trabalhoso.
+
+Para resolver esses problemas e ainda criar uma arquitetura orientada a serviços, decidiram pelo RubyOnRails, usado em 90% da nova estrutura.
+
+#### O que os levou a escolher Rails?
+
+Um dos requisitos principais para a nova aplicação era proporcionar controle sobre a estrutura de URLs, principalmente para uso de SEO. Avaliando frameworks Java, nenhum apresentou um controle satisfatório. Logo, a escolha ficou entre Rails e Django.
+
+Rails acabou levando a melhor sobre Django por que:
+
+1. Possuía uma melhor integração com testes automatizados;
+2. Era uma plataforma mais madura;
+3. Existia um caminho claro para C, caso necessitassem de mais performance;
+4. Os desenvolvedores se sentiam mais confortáveis e experientes.
+
+#### Como ficou a arquitetura da aplicação?
+
+![Arquitetura da aplicação][19]
+
+A figura acima mostra como ficou o design da aplicação, dividida em três camadas: web, serviço e busca, cada uma delas separada por um hardware de balanceamento de carga [F5][12]. O Apache também foi usado no gerenciamento dos processos mongrel, espalhados pela camada web e camada de serviço. 
+
+Vejamos outras características da arquitetura:
+
+1. Comunicação HTTP em todos os níveis sem salvamento de estado (Stateless)
+2. A camada de serviço responde a [REST][13] e no formato [JSON][14]
+3. Memcached foi usado extensivamente na camada de serviço
+4. Ambiente de produção: 25 servidores para a aplicação + 2 servidores para banco de dados Oracle em cada data center.
+
+#### Conseguiram a performance desejada?
+
+Algumas metas de performance foram estabelecidas: A média de carregamento da página inicial deveria estar abaixo de 1 segundo, para páginas de busca a resposta deveria estar em menos de 4 segundos e suportar todo o tráfego sem quedas. Para isso, foram necessárias otimizações:
+
+1. Consideraram o uso de balanceamento de carga por hardware: F5 vs. HAProxy vs. Swiftiply vs. Localhost;
+2. Utilizaram mongrel_handlers para direcionar requisições da camada web para a de serviços sem passar pelo Rails;
+3. Desenvolveram uma biblioteca em C para organizar as respostas do cluster de buscas;
+4. Utilizaram [Erubis][15] para acelerar a renderização das views da camada web;
+5. Minimizaram o tamanho do JavaScript e mudaram de Prototype para jQuery.
+
+#### A reescrita foi considerada um sucesso!
+
+Depois de todo o trabalho, o novo sistema apresentou melhor desempenho que o sistema antigo em Java, com a vantagem de ser feito em Rails e dirigido por testes, o que o torna fácil de manter e de estender.
+
+Para concluir a apresentação, John Straw destacou alguns itens considerados chaves para o sucesso do projeto:
+
+1. Equipe de desenvolvimento pequena e talentosa;
+2. Avaliação cuidadosa da tecnologia e escolha da plataforma compatível com a aplicação;
+3. Fácil comunicação entre os membros da equipe com diversos pontos de vista permitiu uma captura de requisitos sem formalismo;
+4. A regra "Não altere coisas que não são simples de decidir" preveniu a tomada de decisões que paralisavam o projeto;
+5. A criação de um site "beta" constantemente atualizado possibilitou uma visualização clara de progresso e direcionamento.
+
+
+Veja mais detalhes sobre todo o processo de reescrita no PFD da apresentação de John Straw, disponível em [http://en.oreilly.com/rails2008/public/asset/attachment/2765][16]. 
+
+Fontes: [RailsOnWave][17] e [BuildingWebApps][18].
+
+
+
+[1]: http://logbr.reflectivesurface.com/2008/05/26/rails-escala-um-disclaimer/
+[2]: http://blog.iconcreative.net/2008/5/6/rails-escala
+[3]: http://simplesideias.com.br/rails-escala-quem-se-importa/
+[4]: http://www.twitter.com/
+[5]: http://en.oreilly.com/rails2008/
+[6]: http://en.oreilly.com/rails2008/public/schedule/speaker/2744
+[7]: http://www.yellowpages.com/
+[8]: http://en.oreilly.com/rails2008/public/schedule/detail/2082
+[9]: http://flavio.files.wordpress.com/2008/06/yellow-pages.jpg?w=250
+[10]: //www.telelistas.net/
+[11]: http://en.wikipedia.org/wiki/Search_engine_optimization
+[12]: http://www.f5.com/products/big-ip/
+[13]: http://flaviogranero.com/blog/conhecendo-rest/
+[14]: http://www.json.org/
+[15]: http://www.kuwata-lab.com/erubis/
+[16]: http://en.oreilly.com/rails2008/public/asset/attachment/2765
+[17]: http://www.railsonwave.com/railsonwave/2008/6/4/yellowpages-com-migrates-to-rails
+[18]: http://www.buildingwebapps.com/articles/29-the-rebuilding-and-scaling-of-yellowpages-com
+[19]: http://flavio.files.wordpress.com/2008/06/yellowpages_applicationdesign.jpg?w=300
+

@@ -1,0 +1,58 @@
+Date: Thu, 27 Mar 2008 20:42:11 +0000
+Categories: REST
+Summary: Introdução a arquitetura de software orientado a recursos e ao padrão REST
+
+# Conhecendo REST
+
+Ser bombardeado diariamente com novidades tecnológicas foi o que sempre me atraiu no mercado de desenvolvimento de software. Justamente por isso que há algum tempo não acredito mais que exista uma tecnologia que possa resolver todos os problemas, mas que cada uma tem suas vantagens de acordo ![Rest Shampoo][1] com o tipo do projeto. Há pouco mais de um ano eu escrevia uma monografia para o curso de pós-graduação com o que era de mais avançado em termos de arquitetura distribuída através de webservices. Seu título? "[Estudo do MDA e SOA][2]", tratando de como é possível projetar um sistema em uma arquitetura orientada a serviços com diagramas [UML][3] e, com a mágica de uma [ferramenta CASE][4], gerar o código e as interfaces de serviços facilmente. As descrições de serviços eram feitas em [WSDL][5] e o protocolo para comunicação, [SOAP][6].
+
+Algum tempo depois, estudando Ruby e [Ruby On Rails][7] deslumbrei-me com um novo conceito de arquitetura. Chamava-se ROA, ou arquitetura orientada a recursos. 
+
+### E qual a diferença entre [SOA][8] e ROA?
+
+Em SOA, o desenvolvedor descreve **serviços**, representados por verbos. Para obter uma lista de eventos cadastrados no sistema teríamos um método publicado com o nome **GetEvents,** por exemplo. A comunicação com os serviços pode ser feita através de vários protocolos, entre eles SOAP, CORBA, DCOM, etc.
+
+Já ROA pode ser vista como uma especialidade de SOA, onde ao invés de serviços, publicam-se **recursos**, ou seja, entidades. Para o mesmo exemplo da lista de eventos, bastaria ter um recurso em nosso sistema acessível pelo nome **Events** que provesse essa funcionalidade. Cada recurso pode prover uma série de funcionalidades, cada uma comparável a um serviço. Cabe ao protocolo de comunicação informar ao recurso qual a função desejada pelo cliente.
+
+### Se em arquiteturas SOA eu uso o protocolo SOAP, então em ROA usarei REST?
+
+Essa é uma confusão freqüente. Tratar REST como um protocolo. [REST][9], sigla de _Representational State Transfer_, na verdade é um padrão para a construção de _webservices_ que farão uso unicamente do protocolo [HTTP][10] para a comunicação. 
+
+### Mas o protocolo SOAP também pode usar HTTP!
+
+Na maioria dos casos, os dados empacotados em SOAP são transferidos usando o protocolo HTTP. Neste caso, HTTP é utilizado apenas para transporte, já que ambos os lados (cliente e servidor) precisam conhecer SOAP para desempacotar e utilizar os dados.
+
+Em sistemas construídos da maneira REST (RESTful), nenhum outro protocolo é necessário além do HTTP, o mesmo usado pelos navegadores para obter páginas na internet. Dessa forma vemos claramente que em REST, serviços são tratados como Websites.
+
+Muito se [discute][11] sobre as [vantagens][12] da [abordagem][13] REST em [relação][14] à SOAP, mas como escrevi no inicio do texto, cada tecnologia pode trazer um melhor resultado dependendo do projeto e da maneira como é aplicada. 
+
+Mas uma coisa é certa, REST traz simplicidade ao desenvolvimento de webservices, tanto na construção do servidor quanto na implementação de clientes.
+
+Aprenda mais sobre REST em:
+
+1. Livro [RESTful Web Services][15];
+2. [Descrição da implementação REST no Del.icio.us][16];
+3. [Dissertação que originou o conceito REST][17];
+4. [Artigo mostrando quando usar REST e quando usar SOAP][18].
+
+
+
+[1]: http://flavio.files.wordpress.com/2008/03/rest_shampoo.jpg
+[2]: http://www.scribd.com/doc/2371155/Monografia-MDA-e-SOA
+[3]: http://pt.wikipedia.org/wiki/UML
+[4]: http://pt.wikipedia.org/wiki/Ferramenta_CASE
+[5]: http://www.w3.org/TR/wsdl
+[6]: http://pt.wikipedia.org/wiki/SOAP
+[7]: http://www.rubyonrails.org/
+[8]: http://en.wikipedia.org/wiki/Service-oriented_architecture
+[9]: http://en.wikipedia.org/wiki/Representational_State_Transfer
+[10]: http://en.wikipedia.org/wiki/HTTP
+[11]: http://www.innoq.com/blog/st/2006/06/30/rest_vs_soap_oh_no_not_again.html
+[12]: http://www.petefreitag.com/item/431.cfm
+[13]: http://blpsilva.wordpress.com/2007/11/21/rest-vs-soap/
+[14]: http://www.oreillynet.com/pub/wlg/3005
+[15]: http://www.oreilly.com/catalog/9780596529260/
+[16]: http://www.peej.co.uk/articles/restfully-delicious.html
+[17]: http://www.ics.uci.edu/%7Efielding/pubs/dissertation/top.htm
+[18]: http://java.sun.com/developer/technicalArticles/WebServices/restful/
+

@@ -1,0 +1,112 @@
+Date: Sat, 18 Apr 2009 21:08:21 +0000
+Categories: plugin, rails
+Summary: Um plugin para Ruby on Rails que possibilita uma forma simples para filtragem de dados, principalmente em páginas administrativas.
+
+# Filter Table: Plugin para geração de filtros para Rails
+
+
+Filter Table é um plugin para Ruby on Rails que possibilita uma forma simples para filtragem de dados. O plugin adiciona um método ao controller para gerar condições do ActiveRecord baseado nos parâmetros passados na requisição. Além disso, o plugin inclui Helpers para auxiliar a inserção dos links de filtros nas Views.
+
+### Instalando:
+
+O código do plugin está hospedado no GitHub, para instalá-lo em sua aplicação, 
+execute o comando:
+
+		:::bash
+		script/plugin install git://github.com/flaviogranero/filter_table.git
+
+### Usando:
+
+Para usar o plugin, basta adicionar uma chamada ao método __filter_attributes__ no controller desejado, passando os atributos que podem ser usados na construção do filtro. Feito isso, pode-se chamar o método __filter_conditions__ na carga de dados do seu modelo. Vejamos um exemplo de uso no controller:
+
+#### Controller (cars_controller.rb):
+
+		:::ruby
+		class CarsController < ApplicationController
+ 			filter_attributes :status
+
+				def index
+					@cars = Car.paginate :page => params[:page], :conditions => filter_conditions 
+				end
+		end
+
+
+Observe que o modelo Car possui um atributo "status" do tipo inteiro, que será usado pelo plugin para gerar as condições baseado nos valores passados como parâmetros da requisição. Um exemplo de URL filtrando os carros com status igual a 1 por exemplo, seria: /cars?status=1
+
+Os filtros ainda podem ser combinados. Um exemplo para isso seria uma requisição para mostrar os carros com status igual a 1 __OU__ a 2: /cars?status=1+2
+
+Criar links na sua página de listagem com todas as combinações de filtros pode ser um tanto trabalhoso. Para facilitar isso, o plugin conta com método auxiliar com essa finalidade, chamado **filter_links_for**. Os parâmetros para o método variam de acordo com a necessidade e o tipo do atributo. Vejamos algums exemplos de views.
+
+#### View (index.html.erb):
+
+		:::ruby
+		<h1>Cars</h1>
+		  <div>
+		    <h2>Filters</h2>
+		    <%= filter_links_for :status, :values => {'Normal' => 0, 'Broken' => 1, 'Running away' => 2} %>
+		  </div>
+		  <table>
+		    <tr>
+		      <th>Name</th>
+		      <th>Status</th>
+		      <th>Category</th>
+		    </tr>
+		    <% @cars.each do |car| %>
+		      <tr>
+		        <td>< %=h car.name %></td>
+		        <td>< %= car.status %></td>
+		        <td>< %= car.category %></td>
+		      </tr>
+		    <% end %>
+		  </table>
+
+
+No exemplo de view acima, temos como parâmetro o atributo status, e um Hash com os captions e valores possíveis na chave :values.
+
+Você pode ainda passar alguns parâmetros opcionais, como o título da lista de links que será gerada, usando a chave :title, e a classe css usada em filtros ativos pela chave :active_class, cujo valor padrão é "filter_active".
+
+O parâmetro :values aceita Hashs, Arrays ou ainda o valor :auto. Neste último caso, os links dos filtros são geradas a partir de uma query no banco de dados por valores distintos do atributo em questão. Para que isso seja possível, é necessário o uso da chave :model associada ao nome do Modelo, como pode ser observado no exemplo abaixo, para o atributo category:
+
+#### View (index.html.erb):
+
+		:::ruby
+		<h1>Cars</h1>
+		  <div>
+		    <h2>Filters</h2>
+		    < %= filter_links_for :status, :values => {'Normal' => 0, 'Broken' => 1, 'Running away' => 2} %>
+		    < %= filter_links_for :category, :values => :auto, :model => 'Car' %>
+		  </div>
+		  <table>
+		    <tr>
+		      <th>Name</th>
+		      <th>Status</th>
+		      <th>Category</th>
+		    </tr>
+		    < % @cars.each do |car| %>
+		      <tr>
+		        <td>< %=h car.name %></td>
+		        <td>< %= car.status %></td>
+		        <td>< %= car.category %></td>
+		      </tr>
+		    < % end %>
+		  </table>
+
+
+Para cada valor de filtro, é gerado um link para filtragem exclusiva, e outro para adicionar o valor ao filtro atual. Quando um filtro já está aplicado, esse link é substituído por outro, com a função de remover o valor do filtro atual.
+
+### Contribuindo:
+
+Contribuições com idéias e novas funcionalidades são sempre bem vindas. O plugin possui cobertura por testes unitários, bastando executar "Rake test" dentro de sua pasta. Fique à vontade para clonar o repositório em [http://github.com/flaviogranero/filter_table/][1]
+
+### Conclusão:
+
+O uso do plugin [filter_table][1] torna páginas com grandes listas de dados, principalmente as usadas para administração de sistemas, mais fáceis de navegar e de visualizar.
+
+Criei o plugin para sanar a necessidade por filtros que tinha em páginas administrativas de um sistema em Ruby on Rails, já que as soluções em plugins e gems existentes com a solução são normalmente complexos de configurar e manter, agregam muitas funcionalidades e na maioria das vezes fazem uso de AJAX de forma abusiva.
+
+O [filter_table][1] destina-se a resolver apenas o problema dos filtros, sem mágica, mantendo o código simples.
+
+
+
+[1]: http://github.com/flaviogranero/filter_table/
+

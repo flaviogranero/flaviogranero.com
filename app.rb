@@ -1,14 +1,14 @@
 # Use the app.rb file to load Ruby code, modify or extend the models, or
 # do whatever else you fancy when the theme is loaded.
+require 'rack/codehighlighter'
 
 module Nesta
   class App
-    # Uncomment the Rack::Static line below if your theme has assets
-    # (i.e images or JavaScript).
-    #
-    # Put your assets in themes/fg/public/fg.
-    #
     use Rack::Static, :urls => ["/fg"], :root => "themes/fg/public"
+		use Rack::Codehighlighter, :coderay, :markdown => true,
+		  :element => "pre>code", 
+			:pattern => /\A:::(\w+)\s*(\n|&#x000A;)/i, 
+			:logging => false, :css => :style
 
     helpers do
       # Add new helpers here.
@@ -16,9 +16,9 @@ module Nesta
 
     # Add new routes here.
 
-			# redirect old links with timestamp path
+		# redirect old links with timestamp path
 		get %r{/\d{4}/\d{2}/\d{2}/([\w/.-]+)} do |page|
-		  redirect "/#{page}"
+		  redirect "/blog/#{page}"
 		end
   end
 end

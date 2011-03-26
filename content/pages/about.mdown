@@ -1,0 +1,42 @@
+# Sobre
+
+
+### Sobre o Blog
+
+A intenção do blog é publicar textos sobre assuntos que envolvam desenvolvimento de software, além de temas aleatórios relacionados à tecnologia, ilustração e entretenimento.
+
+### Sobre o Autor
+
+Olá, me chamo Flávio Granero Maltempe, tenho 26 anos, e trabalho atualmente 
+como desenvolvedor de aplicações web utilizando [Ruby on Rails][1] para a [Reach 
+Network][2], empresa situada em Seattle, WA.
+
+Sou  graduado no curso de Ciência da Computação da Universidade Estadual de 
+Maringá e Pós-Graduado em Engenharia de Software e Banco de Dados pela Universidade 
+Estadual de Londrina. 
+
+Trabalho como analista de sistemas à 5 anos, e procuro conhecer sempre o que 
+existe de mais recente em práticas de desenvolvimento, como desenvolvimento 
+orientado à testes (TDD e BDD), técnicas de refatoração, padrões de projeto 
+e construção e utilização de frameworks.
+
+Sou adepto de metodologias ágeis, como [eXtreme Programming][3] e [Scrum][4], 
+e de ferramentas de que facilitem a gerência de configuração e mudança, como 
+TRAC, SVN e mais recentemente, GIT.
+
+Escrevo esporadicamente neste [Blog][5] e com mais frequencia no [Twitter][6]. 
+Constantemente, publico links no [Delicious][7] e fotos no [Flickr][8]. Mantenho projetos open source no [GitHub][9] e um currículo mais completo no [LinkedIn][10]. 
+
+
+
+[1]: http://rubyonrails.org/
+[2]: http://reachnetwork.com
+[3]: http://www.extremeprogramming.org/
+[4]: http://pt.wikipedia.org/wiki/Scrum
+[5]: http://flaviogranero.com
+[6]: http://twitter.com/flaviogranero
+[7]: http://delicious.com/maltempe
+[8]: http://www.flickr.com/photos/maltempe/
+[9]: http://github.com/flaviogranero
+[10]: http://http://www.linkedin.com/in/flaviogranero
+

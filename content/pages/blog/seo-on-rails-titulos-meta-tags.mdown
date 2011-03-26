@@ -1,0 +1,110 @@
+Date: Mon, 06 Oct 2008 03:10:29 +0000
+Categories: rails, seo
+Summary: Utilize o plugin meta-tags para gerenciar o conteúdo das páginas que são importantes para os mecanismos de busca
+
+
+# SEO on Rails: Títulos e Meta-Tags
+
+Otimizar um site para que ele seja bem posicionado pelos mecanismos de busca é uma preocupação recorrente a maioria os desenvolvedores web. As chamadas técnicas de [SEO][1] já não são segredo e existem muitos bons sites que ensinam como alcançar as primeiras páginas do Google. Logicamente apenas o próprio Google pode garantir uma posição em seu resultado, mas existem alguns fatores que quando levados em consideração influenciam diretamente esse posicionamento. 
+
+Quando criamos um sistema usando Rails, alguns pontos podem passar desapercebidos, devido as convenções usadas pelo framework. Pretendo iniciar uma série de posts mostrando como fazer SEO em aplicações Rails, mostrando alguns métodos e plugins que podem facilitar o nosso trabalho.
+
+### Técnicas de SEO
+
+Para ter uma introdução sobre o que significa SEO e como são classificadas essas práticas, principalmente pelos mecanismos de busca, eu recomendo a leitura do artigo [White, Gray e Black Hats][2]. Neste post do tableless, Diego Eis mostra exemplos de técnicas White Hat, que são as recomendadas pelos buscadores, as técnicas Gray Hat, que se utilizadas se forma abusiva são consideradas anti-éticas, e ainda das Black Hat, essas sim tomadas como forma de enganar o ranking, e que quando descobertas são punidas com a remoção do site infrator.
+
+As boas práticas recomendadas (White Hat) podem ser resumidas em: criar bom conteúdo e criar links internos. Para os buscadores, um bom conteúdo é um conteúdo relevante, ou seja, um conteúdo que por sua qualidade está sendo linkado por editores de outros sites. Além da qualidade, atualmente os buscadores verificam se esse conteúdo está formatado adequadamente, fazendo uso correto de meta-tags e estrturado de acordo com as definições da W3C. O Google, por exemplo, classifica melhor páginas bem formadas, com tags semanticamente corretas e uma boa hierarquia de títulos. Uma boa dica é sempre utilizar a ferramenta [validação de HTML e CSS][3] da W3C e ainda as [ferramentas para webmasters][4] disponibilizadas pelo próprio Google, que verificam diversos aspectos que alteram a indexação. 
+
+### Títulos e Meta-Tags
+
+Quem já teve um site indexado sabe da importância dada à tag com o título da página (<title>) e as chamadas meta-tags, com a descrição (<description>) e as palavras chaves (<keywords>), que vão no cabeçalho do HTML. Por isso, é importante que cada página da sua aplicação tenha conteúdos distintos nestas tags, algo que se encaixe com o conteúdo apresentado. Para facilitar esse trabalho, vou apresentar o plugin para Rails chamado [meta-tags][5].
+
+Se você tem o GIT instalado, vá até a pasta da sua aplicação e execute:
+
+		:::bash
+		$ script/plugin install git://github.com/kpumuk/meta-tags.git
+
+Feito isso, você já pode organizar melhor o conteúdo de suas meta-tags. Vejamos como utilizar o plugin em uma aplicação Rails, que para fins de exemplo, chamarei de "Locadora".
+
+No layout da aplicação (normalmente em app/views/layouts/application.html.erb), 
+use o helper **display_meta_tags**, da seguinte maneira:
+
+		:::ruby
+		<head>
+			<%= display_meta_tags :site => 'Locadora' %>
+		</head>
+
+
+Este método é responsável por inserir as tags e **title**, **description** e **keywords** no HTML. Depois, podemos configurar valores como o título da página para cada view, usando a seguinte chamada:
+
+		:::ruby
+		<h1>< %= title 'Locações pendentes' %></h1>
+
+
+Fazendo isso por exemplo, quando a página acima for mostrada, sua tag title será configurada de acordo com o conteúdo, no formato abaixo:
+
+		:::html
+		<head>
+			<title>Locadora | Locações pendentes</title>
+		</head>
+
+		<body>
+			<h1>Locações pendentes</h1>
+		</body>
+		
+
+É possível ainda setar o valor das tags diretamente dos controllers, acessando variáveis de instância:
+
+		:::ruby
+		@page_title = 'Locações pendentes'
+		@page_description = 'Lista de locações que ainda não foram devolvidas.'
+		@page_keywords = 'Locadora, Locações, Pendentes'
+
+
+Ou ainda, usando o método **set_meta_tags**:
+
+		:::ruby
+		set_meta_tags :title => 'Locações pendentes',
+			:description => 'Lista de locações que ainda não foram devolvidas.',
+			:keywords => 'Locadora, Locações, Pendentes'
+
+
+Caso você queira, pode ainda usar opções extras para personalizar seus títulos: 
+
+**:prefix** - Para não mostrar o nome do site antes por exemplo, ou mostrar 
+outro conteúdo
+
+Ex.: <%= title 'Locações pendentes', :prefix => false %> #--> <title>Locações 
+pendentes</title>
+
+**:separator** - Texto usado para separar o nome do site do nome da página. 
+
+Ex.: <%= title 'Locações pendentes', :separator => ":" %> #--> <title>Locadora 
+: Locações pendentes</title>
+
+**:reverse** - Quando verdadeiro, inverte a posição no nome do site e o nome 
+da página.
+
+Ex.: <%= title 'Locações pendentes', :reverse => true %> #--> <title>Locações 
+pendentes | Locadora</title>
+
+Outras opções e formas de uso são melhor detalhadas no arquivo **README.rdoc**, que se encontra na pasta do plugin.
+
+O plugin [meta-tags][5] facilita o gerenciamento do conteúdo de tags que são de suma importância para ter um website bem posicionado. Conteúdo esse que fica mais difícil de individualizar para cada view a medida que a aplicação cresce. Uma boa prática para o uso deste plugin é setar valores padrão das tags no controller da aplicação (application.rb) e depois customizar o conteúdo nas views.
+
+Nos próximos posts desta série, teremos mais dicas de plugins para melhorar o SEO das suas aplicações Rails. Aguardem...
+
+Leia mais sobre SEO:
+
+1. [Página sobre SEO no Tableless][6]
+2. [Marketing de Busca][1]
+
+
+
+[1]: http://www.marketingdebusca.com.br/seo/
+[2]: http://www.tableless.com.br/white-gray-e-black-hats
+[3]: http://validator.w3.org/
+[4]: http://www.google.com/webmasters/
+[5]: http://github.com/kpumuk/meta-tags
+[6]: http://www.tableless.com.br/seo
+

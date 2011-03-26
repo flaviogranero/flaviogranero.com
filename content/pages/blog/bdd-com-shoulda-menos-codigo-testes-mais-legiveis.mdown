@@ -1,0 +1,158 @@
+Date: Sat, 19 Jul 2008 20:48:49 +0000
+Categories: rails, TDD
+ Summary: Testes unitários mais legíveis e sucintos usando Shoulda
+
+# BDD com Shoulda: Menos código, testes mais legíveis
+
+
+Para quem ainda não conhece, [BDD][1] (Behavior Driven Development) é uma prática de processos ágeis que vem mudando a maneira como os desenvolvedores escrevem testes automatizados para seus sistemas.  Testes escritos sobre este conceito são mais fáceis de entender e podem ser utilizados como ferramenta de modelagem de um sistema, já que eles ajudam pessoas com pouco conhecimento técnico à entender funcionamento do software. Além disso, testes simples de entender também são simples de manter.
+
+Essas vantagens me fizeram pensar na idéia de migrar os testes do meu [projeto Rails][2], que tinha seus testes unitários escritos sobre o framework Test/Unit, o padrão utilizados pelo Rails para [TDD][3] (Test Driven Development). Para realizar a mudança era necessário aprender a utilizar outro framework, no caso o [RSpec][4].
+
+Foi então que, acompanhando a blogosfera de Railers, através de um [post do Carlos Brando][5], conheci o [Shoulda][6]. O Shoulda é um framework recente e que eu considero como um passo intermediário entre o Test/Unit e o RSpec. Ele traz um conjunto de classes e métodos que melhoram o Test/Unit padrão, permitindo o uso de uma sintaxe parecida com a do RSpec. Assim é possível se aproximar de BDD sem ter muito impacto na forma de programar os testes.
+
+Vou exemplificar aqui o migração dos testes de um model simples do [Sismiko][2], a classe City que possui apenas os atributos “name” e “state_id”, representando o nome da cidade e o id do estado, respectivamente. 
+
+Observe o código utilizando o modo padrão:
+
+    :::ruby
+    class CityTest < Test::Unit::TestCase
+      fixtures :cities
+
+			#testa se o nome da cidade é um campo requerido
+			def test_name_required
+    		check_required(:name)
+      end
+
+			#testa se o campo state_id da cidade é um campo requerido 
+      def test_state_required 
+        check_required(:state_id)
+      end
+
+			#testa se o tamanho máximo do campo nome é de 100 caracteres 
+      def test_max_name 
+        city = create(:name => "a" * 101)
+        assert city.errors.invalid?(:name),"name must have a maximum of 100 chars" 
+        assert_not_nil city.errors.on(:name)
+        assert !city.valid?, "city shouldn't be created"
+      end
+
+      private
+
+			#cria uma cidade padrão
+      def create(options={})
+        City.create({
+          :name => "Maringá",
+          :state_id => 1
+          }.merge(options))
+      end
+
+			#verifica se o campo passado em att é requerido pelo objeto
+      def check_required(att) 
+        city = create(att => nil)
+        assert city.errors.invalid?(att)
+        assert_not_nil city.errors.on(att)
+        assert !city.valid?, "city shouldn't be created"
+      end
+    end
+
+
+No código acima vemos três testes sendo feitos e mais dois métodos auxiliares, 
+para criar um objeto com valores padrão em seus atributos e outro para verificar se um atributo é requerido. Quanto as testes, o primeiro e o segundo testes verificam se os campos “name” e “state_id” são obrigatórios ao criar um objeto de cidade. O terceiro verifica se o campo “name” aceita no máximo 100 caracteres. 
+
+Vejamos agora o código necessário para fazer os mesmo testes, usando a declaração de contextos pregada pelo BDD para deixar os testes mais legíveis, já utilizando o Shoulda:
+
+		:::ruby
+		class CityTest < Test::Unit::TestCase
+			fixtures :cities
+
+			context "A City instance" do
+				setup do
+					@city = create
+				end
+
+				should "have a required name" do
+					check_required(:name)
+				end
+
+				should "have a required state" do
+					check_required(:state_id)
+				end
+
+				#uso de contexto aninhado
+				context "with a large name" do
+					setup do
+						@city.name = "a" * 101
+						@city.save
+					end
+
+					should "validate max size of name" do
+						assert city.errors.invalid?(:name)
+					end
+				end
+			end
+
+			private
+
+			#cria uma cidade padrão
+			def create(options={}) 
+				City.create({
+					:name => "Maringá",
+					:state_id => 1
+				}.merge(options))
+			end
+
+			#verifica se o campo passado em att é requerido pelo 
+			objeto
+			def check_required(att) 
+				city = create(att => nil)
+				assert city.errors.invalid?(att)
+				assert_not_nil city.errors.on(att)
+				assert !city.valid?, "city shouldn't be created"
+			end
+		end
+
+
+Com certeza ficou mais fácil de entender e também de localizar o erro. Por 
+exemplo, caso o teste de atributo “name” requerido falhe, recebemos a seguinte 
+mensagem:
+
+		:::bash
+		test: A City instance should have a required name
+
+O uso do novo framework melhorou a legibilidade dos testes, mas podemos melhorar ainda mais. Fazendo uso de helpers acrescentados pelo Shoulda, é possível reduzir o código para algo assim:
+
+		:::ruby
+		class CityTest < Test::Unit::TestCase
+ 			fixtures :cities
+
+			should_require_attributes :name, :state_id #1
+ 			should_ensure_length_in_range :name, (0...100) #2
+		end
+
+
+Sem dúvida, muito mais simples. A linha comentada com #1 substitui dois testes escritos anteriormente, validando os campos “name” e “state_id” como requeridos. Em #2 verifica-se se o atributo “name” aceita valores com tamanho entre 0 e 100, rejeitando valores maiores.
+
+Ficou impressionado? Instale o Shoulda e faça suas experiências, o projeto 
+está no github:
+
+		::bash
+		script/plugin install git://github.com/thoughtbot/shoulda.git
+
+Veja também:
+
+O Lucas Hungaro fez um [screencast][7] muito bacana com uma introdução ao Shoulda. 
+
+Existem vários outros helpers além dos apresentados aqui. A documentação de 
+todos eles pode ser encontrada na [documentação ][8][do projeto][8].
+
+
+[1]: http://en.wikipedia.org/wiki/Behavior_driven_development
+[2]: http://www.sismiko.com (Sismiko)
+[3]: http://en.wikipedia.org/wiki/Test-driven_development (TDD)
+[4]: http://rspec.info
+[5]: http://www.nomedojogo.com/2008/05/30/ruby-shoulda-bundle-para-textmate/
+[6]: http://www.thoughtbot.com/projects/shoulda (Página do projeto Shoulda)
+[7]: http://www.makemesimple.com/blog/2008/06/27/learncast1-bdd-leve-com-shoulda-testando-modelos-activerecord/
+[8]: http://dev.thoughtbot.com/shoulda (Documentação do Shoulda)
+

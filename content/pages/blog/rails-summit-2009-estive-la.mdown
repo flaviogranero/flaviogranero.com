@@ -1,0 +1,71 @@
+Date: Tue, 27 Oct 2009 02:16:56 +0000
+Categories: rubyconf
+Summary: A segunda edição do evento foi ainda melhor.
+
+# Rails Summit 2009: Estive lá
+
+## A Viajem
+
+![Eu, Ricardo e Chad][1]
+
+Foi cansativo, mas mais uma vez valeu muito a pena. Desta vez não conseguimos interessados suficientes para organizar uma caravana paranaeense, então nos aventuramos eu e o [RicardoK][2] a viajar de Londrina até São Paulo de ônibus. A viajem corria bem, até percebermos que era volta de feriado prolongado e que enfrentaríamos mais de 100km de trânsito lento. Chegamos com mais de 3 horas de atraso, mas ainda assim com muito tempo para descansar antes do evento. Fiquei no mesmo hotel do ano passado, perto do metrô tietê, onde havia combinado de dividir o quarto com o [Leonardo Faria][3], programador de Divinópolis-MG que até então não conhecia pessoalmente.
+
+## O Evento
+
+![Eu e Vinicius Teles][4]
+
+A RailsSummit 2009 aconteceu nos dias 13 e 14 de outubro, no Centro de Convenções Anhembi. Foi a segunda edição do maior evento sobre o tema na América Latina. Estive presente também na primeira edição, que foi bem organizada e teve um valor especial para mim, pois foi onde [consegui meu emprego atual][5]. Devido a isso, já tínhamos uma expectativa muito boa para a edição desse ano, só não acreditava que seria possível um evento melhor que o do ano passado. Mas foi… 
+
+Neste ano não só corrigiram alguns poucos problemas que haviam ocorrido, como melhorar a temperatura do auditório B, como também aumentaram o espaço para networking e o espaço do restaurante, melhoraram o acesso à internet e acrescentaram tradução das palestras de português para para inglês. Além disso, como em um bom evento geek, tivemos um espaço com video-games, onde pude derrotar meu padrão no boxe do Wii =).
+
+Quanto às palestras, mais uma vez tivemos temas variados abordados por grandes nomes internacionais e nacionais, que foram de escalabilidade e testes até empreendedorismo. O [Leonardo][6] fez um resumo do [primeiro][7] e do [segundo][8] dias. Foram muitas apresentações excelentes, com destaque para [Gregg Pollack][9] mostrando várias gems e plugins para ajudar na melhora da performance das aplicações no primeiro dia e para [Vinicius Teles][10], falando sobre suas experiencias de empreendedorismo com a ImproveIt, e [Obie Fernandez][11], que falou sobre a arte de desenvolver aplicações, já no segundo dia.
+
+
+## Encontros
+
+![Jony, Herval, Leozera, Eu e RicardoK][12]
+
+Participar de um grande evento como foi o Rails Summit também é uma ótima oportunidade para rever amigos que moram em outras cidades ou estados, e ainda para conhecer aqueles desenvolvedores que você só reconhece o avatar das redes sociais, twitter e IMs. Reencontrei o pessoal do paraná ([Ozéias][13], [Davis][14], [Zé Gomes][15], [Maurício][16]) e de outros estados ([Thiago Freire][17], [Jony][18]), e também conheci alguns railers pessoalmente pela primeira vez ([Leonardo Faria][6], [Herval][19], [Roberto Soares][20], [Diego][21] e [George Guimarães][22]). 
+
+Tive a chance de conhecer também alguns participantes do [rails-hits podcast][23], como o [Elomar França][24] e o [Paulo Fagiani][25], que já estavam promovendo o Oxente Rails 2010, e o [Vinícius Teles][10], que fez uma das palestras mais motivadoras da conferência.
+
+E ainda, como na edição passado, o [Chad][26] estava presente, desta vez com mais alguns desenvolvedores vindos de Buenos Aires. É sempre bom poder conversar sem usar o skype, que é como fazemos diariamente no trabalho para a Reach. 
+
+## Conclusão
+
+Sem dúvidas, o que fica do evento é um saldo muito positivo. Algumas sugestões que fizemos no ano passado foram implementadas, como o uso do login no crachá do evento. Já as camisetas, para mim acabaram sendo um grande #fail. Deixo aqui os parabéns ao [Akita][27] e a [Locaweb][28] pela organização, aos patrocinadores do evento, e aos Railers de todos os cantos do Brasil e alguns de fora dele, que compareceram e fizeram uma conferência ainda melhor que a anterior. A comunidade parece estar crescendo e mais do que isso, está amadurecendo, com cada vez mais profissionais trabalhando e contribuindo com a tecnologia. Volto para a rotina de trabalho com a motivação renovada.
+
+* Algumas fotos do [flickr da locaweb][29], veja outras fotos do evento também 
+no [meu flickr][30].
+
+[1]: http://flavio.files.wordpress.com/2009/10/4026518141_4e2c9f87cf_o.jpg?w=300 (Eu, Ricardo e Chad)
+[2]: http://ricardok.com
+[3]: http://leonardofaria.net
+[4]: http://flavio.files.wordpress.com/2009/10/dsc00623.jpg?w=300 (Eu e Vinicius Teles)
+[5]: http://flaviogranero.com/blog/rails-summit-emprego-novo/
+[6]: http://twitter.com/leozera
+[7]: http://leonardofaria.net/2009/10/13/rails-summit-resumo-do-primeiro-dia/
+[8]: http://leonardofaria.net/2009/10/14/rails-summit-resumo-do-segundo-dia/
+[9]: http://twitter.com/greggpollack
+[10]: http://twitter.com/viniciusteles
+[11]: http://twitter.com/obie
+[12]: http://flavio.files.wordpress.com/2009/10/4027296870_9d2c7902e2_o.jpg?w=300 (Jony, Herval, Leozera, Eu e RicardoK)
+[13]: http://twitter.com/ozeias
+[14]: http://twitter.com/daviscabral
+[15]: http://twitter.com/zegomesjf
+[16]: http://twitter.com/mauriciozaffari
+[17]: http://twitter.com/freireag
+[18]: http://twitter.com/jonysk
+[19]: http://twitter.com/herval
+[20]: http://twitter.com/bt1
+[21]: http://twitter.com/diegorv
+[22]: http://twitter.com/georgeguimaraes
+[23]: http://rails-hits.com
+[24]: http://twitter.com/elomar
+[25]: http://twitter.com/fagiani
+[26]: http://twitter.com/rubyrescue
+[27]: http://www.akitaonrails.com
+[28]: http://www.locaweb.com.br
+[29]: http://www.flickr.com/photos/locaweb/
+[30]: http://www.flickr.com/photos/maltempe/tags/railssummit/
+

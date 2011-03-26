@@ -1,0 +1,42 @@
+Date: Mon, 28 Jul 2008 18:54:07 +0000
+Categories: rails, sismiko
+Summary: Sismiko na lista de aplicações brasileiras que utilizam o framework Ruby on Rails publicada por Fábio Akita e chamada para o primeiro Rails Summit Latin América
+
+# Aplicações brasileiras em Rails e conferência Rails em outubro
+
+Todo mundo que já pesquisou um pouco sobre Ruby ou Rails passou a conhecer [Fábio Akita][1]. Ele tem trabalhado bastante para tornar o desenvolvimento em Ruby On Rails cada vez mais popular aqui no Brasil. Para quem ainda não conhece (paraquedista com certeza =D), ele é um dos pioneiros a utilizar a tecnologia, escreveu o primeiro livro em português sobre o assunto e agora está à frente da equipe Rails da Locaweb, para oferecer uma hospedagem de qualidade seguindo o padrão dos hostings internacionais.
+
+A fim de divulgar projetos de brasileiros feitos com Rails, ele publicou em seu blog [uma lista de aplicativos][2] que usam o framework e foram criados por brasileiros. Fico muito agradecido por ter um projeto citado entre outros tão importantes e que me serviram como inspiração. O [Sismiko][3] apareceu entre nomes como [BlogBlogs][4], [TreinaTom][5], [Pagestacker][6], [Mapia][7], [Investidor Virtual][8] e [Ikwa][9], só para citar alguns.
+
+Espero que o [Sismiko][3] também inspire desenvolvedores recém chegados ao Rails à transformar suas idéias em realidade. Não deixe de conferir [a lista completa de aplicativos][2] e até sugerir algum que você conheça mas tenha ficado de fora.
+
+Se meus planos se confirmarem, poderei encontrar os desenvolvedores desses aplicativos na [Rails Summit Latin América][10] que acontece em Outubro, no Anhembi em São Paulo. Se você estava dando uma voltinha por Marte nos últimos dias =D, não deve saber que esta será, com certeza, a maior conferência sobre Rails realizada abaixo da linha do Equador. Nas palavras do próprio Akita: 
+
+> Teremos alguns dos maiores Railers da comunidade internacional como David Hansson, Charles Nutter, Chad Fowler, Dr. Nic, Chris Wanstrath, David Chelinsky e muito mais, em dois dias inteiros, com duas sessões paralelas, incluindo almoço, coffee break por R$ 300 (cerca de USD 190).
+
+Além dessas atrações internacionais, teremos palestras de brasileiros empreendedores Rails: [**Manoel Lemos**][4] do [Brasigo][11] e [BlogBlogs][4], [**Carlos Eduardo**][12] da [e-Genial][13] e [Treina Tom][5], [**Fabio Kung**][14] da [Caelum][15], [**Vinicius Teles**][16] da [Improve it][16] (nosso famoso evangelista de XP) e [**George Guimarães**][17] do [Pagestacker][18].
+
+O site oficial do evento será lançado em breve, com venda de ingressos e dicas 
+de transporte e hospedagem.
+
+
+
+[1]: http://www.akitaonrails.com
+[2]: http://www.akitaonrails.com/2008/7/27/brazilian-rails-websites (Brazilian Rails Websites)
+[3]: http://www.sismiko.com (Sismiko, eventos no Brasil)
+[4]: http://blogblogs.com.br/
+[5]: http://www.treinatom.com.br
+[6]: http://pagestacker.com/
+[7]: http://www.mapia.com.br/
+[8]: http://www.investidorvirtual.com/
+[9]: http://www.ikwa.com.br/
+[10]: http://www.akitaonrails.com/2008/7/13/rails-summit-latin-america-2008
+[11]: http://www.brasigo.com.br/
+[12]: http://www.treinatom.com.br/
+[13]: http://www.egenial.com.br/
+[14]: http://fabiokung.com/
+[15]: http://www.caelum.com.br/
+[16]: http://www.improveit.com.br/
+[17]: http://www.pagestacker.com/br/about#george
+[18]: http://www.pagestacker.com/
+

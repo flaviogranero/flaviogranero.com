@@ -1,0 +1,71 @@
+Date: Fri, 26 Dec 2008 20:18:40 +0000
+Categories: rails, gems
+Summary: A gem scoped_search facilita a definição de buscas utilizando vários campos de um Model com uma query language poderosa
+
+# Ruby Gem: Escopo de busca fácil no ActiveRecord
+
+
+Escrevi a algum tempo um [post mostrando como usar campos FULL TEXT do MySQL][1] para ter uma sistema de busca simples mas eficiente em suas aplicações Rails. Para quem não precisa de uma busca mais sofisticada, o plugin _acts_as_fulltextable_ quebra o galho.
+
+Porém, recentemente me deparei com um situação onde precisava de algo ainda mais simples. Para um sistema de administração de conteúdo, a busca devia pesquisar apenas em um Model, e em apenas alguns campos. Portanto criar uma tabela extra no banco de dados, como o _acts_as_fulltextable_ faz, seria um pouco dispendioso.
+
+Uma solução simples seria usar o método _Model.find_by_name_ por exemplo, para buscar um registro pelo campo 'name', mas isso traria apenas um registro e sem a possibilidade de buscar por mais de um campo com uma única execução. Outra solução seria a criação de *named_scopes*, mas seria um tanto trabalhoso filtrar por vários atributos e ainda tratar a entrada de dados. Foi então que encontrei a gem [scoped_search][2]. Quando instalada, ela adiciona um escopo para buscas em models do Active Record chamada **search_for**, a qual usa cláusulas LIKE da linguagem SQL para efetuar filtros, diretamente no banco de dados.
+
+### Instalação:
+
+Adicione ao environment.rb de sua aplicação:
+
+		::ruby
+		config.gem 'scoped_search',
+
+Depois, execute o comando:
+
+		:::bash
+		$ rake gems:install
+
+
+### Utilização:
+
+Basta adicionar uma linha no Model desejado, indicando os campos que serão usados na busca:
+
+		:::ruby
+		# user.rb
+		class User < ActiveRecord::Base
+			searchable_on :login, :name
+		end
+
+Depois da alteração, a classe passa a contar com o escopo **search_for**, que
+pode ser usado em cascata com outros *named_scopes*. No exemplo abaixo de uma action "search" do controller de usuários, integra-se a busca com a paginação provida pelo _will_paginate_:
+
+		:::ruby
+		# users_controller.rb
+		def search
+			@users = User.search_for(params[:q]).paginate(:page => params[:page])
+			respond_to do |format|
+				format.html
+				format.xml{ render :xml => @users }
+			end
+		end
+
+
+
+Bem tranquilo. Para incrementar um pouco, podemos ainda adicionar campos de associações na busca. Supondo que o usuário tenha um perfil (profile), podemos adicionar o campo description pertencente ao perfil na busca, da seguinte maneira:
+
+
+		:::ruby
+		class User 
+			has_one :profile, :dependent => :destroy
+			searchable_on :login, :name, :profile_description
+		end
+
+
+No MySQL, pode-se ainda utilizar índices FULLTEXT nos campos mais requisitados, para aumentar a performance das buscas.
+
+Fonte: [Easy search with ActiveRecord][3]
+
+
+
+[1]: http://flaviogranero.com/blog/sistema-de-busca-full-text-no-rails-usando-mysql/
+[2]: http://github.com/wvanbergen/scoped_search/tree/master
+[3]: http://techblog.floorplanner.com/2008/07/26/easy-search-with-activerecord/
+

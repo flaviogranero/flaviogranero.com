@@ -1,0 +1,60 @@
+Date: Wed, 04 Jun 2008 18:41:25 +0000
+Categories: rails, sismiko
+Summary: Sismiko é um catálogo colaborativo de eventos escrito em Ruby on Rails
+
+# Meu primeiro empreendimento web com Rails
+
+
+Quando comecei a aprender [Rails][1] a mais de um ano atrás, percebi logo de cara que ali estava a oportunidade de colocar algumas idéias em prática. Em Rails é muito fácil prototipar uma aplicação ou colocá-la em produção rapidamente. Decidi pegar uma de minhas idéias de sistemas web, que anoto em meu caderno de idéias sempre que tenho aquela lâmpada acesa sobre a cabeça, e usar o tempo investido em aprender Ruby e Rails para criar algo funcional, algo que eu pudesse chamar de empreendimento. Inspirado em outras [aventuras][2] da web brasileira em Rails ([Brasigo][3], [Just-remind.Us][4], [Mapia][5]), surgiu o [sismiko.com][6]. 
+
+Foram alguns meses de estudo e implementações feitas somente nas horas vagas, que não tenho como calcular a quantidade, já que em alguns desses meses não consegui escrever nenhuma linha de código nova, devido a acontecimentos imprevistos. Só sei que foram raros os dias que pude dedicar mais de 3 horas. Além disso, tive que me desdobrar para ser programador Rails, designer e construtor de HTML e CSS ao mesmo tempo.
+
+Segui as premissas do livro "[Caindo na Real][7]" e fiz uma versão totalmente enxuta, apenas com as funcionalidades básicas, indo direto ao ponto. A função principal do sismiko é ser um catálogo de eventos, onde o usuário pode ver quais os eventos que irão acontecer na sua cidade e criar uma agenda própria com aqueles em que gostaria de comparecer. Quando eu digo eventos, me refiro a festas, baladas, feiras, cursos, peças de teatro, ou qualquer coisa que seja um encontro de pessoas com uma data definida. O sismiko é também um ranking dos melhores eventos, já que eles são sempre ordenados pelo número de pessoas que agendaram o acontecimento. O usuário pode ver qual o evento mais agendado para sua cidade, para seu estado, ou ainda, para o país (por enquanto só existe suporte ao Brasil). Leia mais no [post de lançamento][8].
+
+Não é uma idéia nova, já que sites como o [upcoming.org][9] fazem isso há algum tempo, mas o sismiko tem o propósito de oferecer um serviço voltado ao público brasileiro e com diferenciais que apresentarei em versões futuras. Acompanhe o [blog do sismiko][10] para ficar sabendo das novas funcionalidades.
+
+Quanto à parte técnica, o sistema está rodando sobre o Rails 1.2.6 e hospedado em um servidor shared no [RailsPlayground.com][11], com fastcgi apenas.
+
+Utilizo os seguintes plugins do Rails:
+
+1. [atachment_fu][12]: para o envio de imagens, com redimensionamento feito pela gem Rmagick;
+2. [exception_notification][13]: Para ser avisado por e-mail sobre erros na aplicação;
+3. [restful_authentication][14]: Para criar contas de usuário de uma maneira REST;
+4. [acts_as_fulltextable][15]: Para implementar um [sistema de busca simples][16] em eventos e locais;
+5. [geokit][17]: Para mostrar eventos próximos à uma determinada localização geográfica e para tentar (nem sempre funciona) localizar a cidade de onde o usuário está acessando o site;
+6. [will_paginate][18]: Para paginar os resultados de busca, eventos e locais.
+
+
+O [sismiko][6] foi desenvolvido de forma [REST][19], mas nesta primeira versão os resursos respondem apenas ao formato HTML. As páginas possuem HTML e CSS validados em [XHTML Strict 1.0][20] e [CSS 2.1][21] respectivamente, com os eventos sendo apresentados através do [microformato hCalendar][22]. Existem alguns javascripts obstrusivos dentro do HTML, o que invalida algumas páginas, mas que logo serão substituídos utilizando o [JQuery][23]. Os ícones eu emprestei do [http://www.famfamfam.com/][24]
+
+Pretendo manter o sistema em constante desenvolvimento, por isso aceito de bom grado sugestões de funcionalidades, de melhorias do layout e informações sobre erros. Na fila de novidades estão comentários nos eventos e locais, feeds de todas as listas, widgets para a agenda ser colocada em blogs e sites e algumas funções em javascript, como a ação "agendar" e a listagem de estados e cidades na barra de localização.
+
+Espero que gostem!
+
+
+
+[1]: http://www.rubyonrails.org/
+[2]: http://blog.brasigo.com.br/2008/03/31/e-comeca-uma-nova-aventura/
+[3]: http://www.brasigo.com.br/
+[4]: http://blog.improveit.com.br/articles/2008/04/17/o-desenvolvimento-do-just-remind-us
+[5]: http://www.mapia.com.br/
+[6]: http://www.sismiko.com/
+[7]: http://gettingreal.37signals.com/GR_por.php
+[8]: http://blog.sismiko.com/2008/05/sismiko-o-lancamento/
+[9]: http://www.upcoming.org/
+[10]: http://blog.sismiko.com/
+[11]: http://www.railsplayground.com/
+[12]: http://agilewebdevelopment.com/plugins/attachment_fu
+[13]: http://agilewebdevelopment.com/plugins/exception_notifier
+[14]: http://agilewebdevelopment.com/plugins/restful_authentication
+[15]: http://blog.wonsys.net/posts/26-our-first-plugin-acts_as_fulltextable/
+[16]: http://flaviogranero.com/blog/sistema-de-busca-full-text-no-rails-usando-mysql/
+[17]: http://geokit.rubyforge.org/
+[18]: http://rock.errtheblog.com/will_paginate
+[19]: http://flaviogranero.com/blog/conhecendo-rest/
+[20]: http://validator.w3.org/check?verbose=1&uri=http%3A%2F%2Fwww.sismiko.com%2Fevents
+[21]: http://jigsaw.w3.org/css-validator/validator?profile=css21&warning=0&uri=http%3A%2F%2Fwww.sismiko.com%2Fevents
+[22]: http://flaviogranero.com/blog/microformats-a-caminho-da-web-semantica/
+[23]: http://jquery.com/
+[24]: http://www.famfamfam.com/
+
