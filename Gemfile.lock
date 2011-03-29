@@ -2,10 +2,20 @@ GEM
   remote: http://rubygems.org/
   specs:
     RedCloth (4.2.7)
+    activesupport (3.0.5)
     coderay (0.9.7)
+    configuration (1.2.0)
     haml (3.0.25)
+    heroku (1.19.1)
+      activesupport (>= 2.1.0)
+      launchy (~> 0.3.2)
+      rest-client (< 1.7.0, >= 1.4.0)
+    launchy (0.3.7)
+      configuration (>= 0.0.5)
+      rake (>= 0.8.1)
     maruku (0.6.0)
       syntax (>= 1.0.0)
+    mime-types (1.16)
     nesta (0.9.4)
       RedCloth (~> 4.2)
       haml (~> 3.0)
@@ -17,6 +27,9 @@ GEM
     rack-codehighlighter (0.4.7)
       nokogiri (>= 1.4.1)
       rack (>= 1.0.0)
+    rake (0.8.7)
+    rest-client (1.6.1)
+      mime-types (>= 1.16)
     shotgun (0.9)
       rack (>= 1.0)
     sinatra (1.1.2)
@@ -30,5 +43,6 @@ PLATFORMS
 
 DEPENDENCIES
   coderay
+  heroku
   nesta (= 0.9.4)
   rack-codehighlighter

@@ -6,7 +6,7 @@ Summary: Introdução a arquitetura de software orientado a recursos e ao padrã
 
 Ser bombardeado diariamente com novidades tecnológicas foi o que sempre me atraiu no mercado de desenvolvimento de software. Justamente por isso que há algum tempo não acredito mais que exista uma tecnologia que possa resolver todos os problemas, mas que cada uma tem suas vantagens de acordo com o tipo do projeto. Há pouco mais de um ano eu escrevia uma monografia para o curso de pós-graduação com o que era de mais avançado em termos de arquitetura distribuída através de webservices. Seu título? "[Estudo do MDA e SOA][2]", tratando de como é possível projetar um sistema em uma arquitetura orientada a serviços com diagramas [UML][3] e, com a mágica de uma [ferramenta CASE][4], gerar o código e as interfaces de serviços facilmente. As descrições de serviços eram feitas em [WSDL][5] e o protocolo para comunicação, [SOAP][6].
 
-![Rest Shampoo][1] 
+> ![Rest Shampoo][1] 
 
 Algum tempo depois, estudando Ruby e [Ruby On Rails][7] deslumbrei-me com um novo conceito de arquitetura. Chamava-se ROA, ou arquitetura orientada a recursos. 
 

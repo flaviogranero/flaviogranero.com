@@ -1,5 +1,5 @@
 %nav.breadcrumb
-  - display_breadcrumbs
+  -# display_breadcrumbs
 
 #content
   %article(role="main")
@@ -16,6 +16,7 @@
 
     = haml :page_meta, :layout => false, :locals => { :page => @page }
 
-  = haml :comments, :layout => false
+  - if @page.parent
+    = haml :comments, :layout => false
 
 =# haml :sidebar, :layout => false
