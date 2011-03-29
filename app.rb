@@ -23,7 +23,11 @@ module Nesta
 
 		# redirect old links with timestamp path
 		get %r{/\d{4}/\d{2}/\d{2}/([\w/.-]+)} do |page|
-		  redirect "/blog/#{page}"
+		  if page =~ /filter-table-plugin/
+		    redirect "/projects/#{page}"
+		  else
+		    redirect "/blog/#{page}"
+		  end
 		end
   end
 end

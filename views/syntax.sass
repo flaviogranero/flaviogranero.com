@@ -3,23 +3,9 @@
   border: 1px solid silver
   font-family: 'Courier New', 'Terminal', monospace
   color: #000
+  font-size: 12px
   pre
     margin: 0px
-
-span.CodeRay
-  white-space: pre
-  border: 0px
-  padding: 2px
-
-table.CodeRay
-  border-collapse: collapse
-  width: 100%
-  padding: 2px
-  td
-    padding: 2px 4px
-    vertical-align: top
-
-.CodeRay
   .line_numbers, .no
     background-color: #def
     color: gray
@@ -30,15 +16,8 @@ table.CodeRay
     padding: 0px 4px
   .code
     width: 100%
-
-ol.CodeRay
-  font-size: 10pt
-  li
-    white-space: pre
-
-.CodeRay
-  .code pre
-    overflow: auto
+    pre
+      overflow: auto
   .debug
     color: white !important
     background: blue !important
@@ -164,12 +143,6 @@ ol.CodeRay
   .r
     color: #080
     font-weight: bold
-
-.kw
-  color: #080
-  font-weight: bold
-
-.CodeRay
   .ke
     color: #808
     .dl
@@ -248,3 +221,8 @@ ol.CodeRay
     color: #66f
   .head .head
     color: #f4f
+  .kw
+    color: #080
+    font-weight: bold
+  
+

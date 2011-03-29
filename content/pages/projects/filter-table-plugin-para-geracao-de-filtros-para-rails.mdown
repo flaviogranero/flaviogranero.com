@@ -12,8 +12,8 @@ Filter Table é um plugin para Ruby on Rails que possibilita uma forma simples p
 O código do plugin está hospedado no GitHub, para instalá-lo em sua aplicação, 
 execute o comando:
 
-		:::bash
-		script/plugin install git://github.com/flaviogranero/filter_table.git
+    :::bash
+    script/plugin install git://github.com/flaviogranero/filter_table.git
 
 ### Usando:
 
@@ -21,14 +21,14 @@ Para usar o plugin, basta adicionar uma chamada ao método __filter_attributes__
 
 #### Controller (cars_controller.rb):
 
-		:::ruby
-		class CarsController < ApplicationController
- 			filter_attributes :status
+    :::ruby
+    class CarsController < ApplicationController
+      filter_attributes :status
 
-				def index
-					@cars = Car.paginate :page => params[:page], :conditions => filter_conditions 
-				end
-		end
+        def index
+          @cars = Car.paginate :page => params[:page], :conditions => filter_conditions 
+        end
+    end
 
 
 Observe que o modelo Car possui um atributo "status" do tipo inteiro, que será usado pelo plugin para gerar as condições baseado nos valores passados como parâmetros da requisição. Um exemplo de URL filtrando os carros com status igual a 1 por exemplo, seria: /cars?status=1
@@ -39,26 +39,26 @@ Criar links na sua página de listagem com todas as combinações de filtros pod
 
 #### View (index.html.erb):
 
-		:::ruby
-		<h1>Cars</h1>
-		  <div>
-		    <h2>Filters</h2>
-		    <%= filter_links_for :status, :values => {'Normal' => 0, 'Broken' => 1, 'Running away' => 2} %>
-		  </div>
-		  <table>
-		    <tr>
-		      <th>Name</th>
-		      <th>Status</th>
-		      <th>Category</th>
-		    </tr>
-		    <% @cars.each do |car| %>
-		      <tr>
-		        <td>< %=h car.name %></td>
-		        <td>< %= car.status %></td>
-		        <td>< %= car.category %></td>
-		      </tr>
-		    <% end %>
-		  </table>
+    :::rhtml
+    <h1>Cars</h1>
+      <div>
+        <h2>Filters</h2>
+        <%= filter_links_for :status, :values => {'Normal' => 0, 'Broken' => 1, 'Running away' => 2} %>
+      </div>
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>Status</th>
+          <th>Category</th>
+        </tr>
+        <% @cars.each do |car| %>
+          <tr>
+            <td><%=h car.name %></td>
+            <td><%= car.status %></td>
+            <td><%= car.category %></td>
+          </tr>
+        <% end %>
+      </table>
 
 
 No exemplo de view acima, temos como parâmetro o atributo status, e um Hash com os captions e valores possíveis na chave :values.
@@ -69,27 +69,27 @@ O parâmetro :values aceita Hashs, Arrays ou ainda o valor :auto. Neste último 
 
 #### View (index.html.erb):
 
-		:::ruby
-		<h1>Cars</h1>
-		  <div>
-		    <h2>Filters</h2>
-		    < %= filter_links_for :status, :values => {'Normal' => 0, 'Broken' => 1, 'Running away' => 2} %>
-		    < %= filter_links_for :category, :values => :auto, :model => 'Car' %>
-		  </div>
-		  <table>
-		    <tr>
-		      <th>Name</th>
-		      <th>Status</th>
-		      <th>Category</th>
-		    </tr>
-		    < % @cars.each do |car| %>
-		      <tr>
-		        <td>< %=h car.name %></td>
-		        <td>< %= car.status %></td>
-		        <td>< %= car.category %></td>
-		      </tr>
-		    < % end %>
-		  </table>
+    :::rhtml
+    <h1>Cars</h1>
+      <div>
+        <h2>Filters</h2>
+        <%= filter_links_for :status, :values => {'Normal' => 0, 'Broken' => 1, 'Running away' => 2} %>
+        <%= filter_links_for :category, :values => :auto, :model => 'Car' %>
+      </div>
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>Status</th>
+          <th>Category</th>
+        </tr>
+        <% @cars.each do |car| %>
+          <tr>
+            <td><%=h car.name %></td>
+            <td><%= car.status %></td>
+            <td><%= car.category %></td>
+          </tr>
+        <% end %>
+      </table>
 
 
 Para cada valor de filtro, é gerado um link para filtragem exclusiva, e outro para adicionar o valor ao filtro atual. Quando um filtro já está aplicado, esse link é substituído por outro, com a função de remover o valor do filtro atual.
