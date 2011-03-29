@@ -7,8 +7,8 @@ Summary: Algumas dicas e exemplos de métodos para iterar entre elementos de um 
 
 Ruby sempre me atraiu pela facilidade com que posso usar as classes Array e Hash para manter estruturas de dados que em outras linguagens eu teria a necessidade de usar classes especiais, normalmente um classe para cada tipo de elemento, o que sempre deixava o código cheio de typecasts e muitos laços FOR ou WHILE para fazer iterações. Diferente de outras linguagens, em Ruby tudo é um objeto, inclusive um Array, que possui métodos que auxiliam na própria iteração com seus elementos. Todos esses métodos de iteração recebem um bloco de código que é executado para cada elemento do Array. Vou mostrar alguns exemplos de uso abaixo, então abra o IRB e vamos testar cada um deles:
 
-		:::ruby
-		numbers = [1, 2, 3, 4, 5]
+    :::ruby
+    numbers = [1, 2, 3, 4, 5]
 
 
 Vamos usar esse array como padrão para os exemplos.
@@ -17,67 +17,67 @@ Vamos usar esse array como padrão para os exemplos.
 
 O método EACH recebe um bloco de código que será executado para cada elemento do Array. Cada elemento é passado para o bloco como parâmetro durante a iteração. Com isso podemos realizar operação com cada elemento, como por exemplo, imprimir uma frase com cada valor:
 
-		:::ruby
-		numbers.each do |number|
-			puts "Linha de numero #{number}"
-		end
+    :::ruby
+    numbers.each do |number|
+      puts "Linha de numero #{number}"
+    end
 
 
 Produzirá:
 
-		:::bash
-		Linha de numero 1
+    :::bash
+    Linha de numero 1
 
-		Linha de numero 2
+    Linha de numero 2
 
-		Linha de numero 3
+    Linha de numero 3
 
-		Linha de numero 4
+    Linha de numero 4
 
-		Linha de numero 5
+    Linha de numero 5
 
 
 ### Método Select
 
 O método SELECT recebe um bloco de código que é executado para cada elemento. A diferença com o EACH é que enquanto este não retorna nenhum valor, o SELECT retorna um outro Array. Vamos comparar a utilização dos dois com um exemplo de seleção de números pares:
 
-		:::ruby
-		even = []
-		numbers.each do |number|
-			even 
-		end
+    :::ruby
+    even = []
+    numbers.each do |number|
+      even 
+    end
 
 
 Adicionamos ao Array even números com o resto da divisão por 2 igual a zero, obtendo [2,4]. Vejamos como o SELECT torna isso ainda mais fácil:
 
-		:::ruby
-		even = numbers.select do |number|
-			number % 2 ==0
-		end
+    :::ruby
+    even = numbers.select do |number|
+      number % 2 ==0
+    end
 
 
 ### Método Inject
 
 O método INJECT também chama um bloco de código para cada iteração, mas com a diferença de passar 2 parâmetros a esse bloco. O primeiro deles é um acumulador e o segundo é o elemento. Vamos novamente comparar sua utilização com o EACH com um exemplo onde somamos todos os valores do Array numbers, primeiro usando o EACH e depois usando o INJECT:
 
-		:::ruby
-		sum = 0
-		numbers.each do |number|
-			sum += number
-		end
+    :::ruby
+    sum = 0
+    numbers.each do |number|
+      sum += number
+    end
 
-		sum = numbers.inject do |a, number|
-			a + number
-		end
+    sum = numbers.inject do |a, number|
+      a + number
+    end
 
 
 O INJECT pode ainda receber um parâmetro, que é usado como valor inicial para 
 o acumulador. Exemplo:
 
-		:::ruby
-		sum = numbers.inject(10) do |a, number|
-			a + number
-		end
+    :::ruby
+    sum = numbers.inject(10) do |a, number|
+      a + number
+    end
 
 
 Com o valor inicial sendo 10, sum passaria a ter o valor 25.
@@ -86,15 +86,15 @@ Com o valor inicial sendo 10, sum passaria a ter o valor 25.
 
 O método MAP realiza a mesma iteração em um bloco de código como nos métodos anteriores, mas a resposta é um novo Array, com novos elementos baseado em operações aplicadas a cada elemento. Desta vez vamos comparar sua utilização com o EACH criando um Array com os valores de numbers multiplicados por 10.
 
-		:::ruby
-		new_numbers = []
-		numbers.each do |number|
-			new_numbers 
-		end
+    :::ruby
+    new_numbers = []
+    numbers.each do |number|
+      new_numbers 
+    end
 
-		new_numbers = numbers.map do |number|
-			number * 10
-		end
+    new_numbers = numbers.map do |number|
+      number * 10
+    end
 
 
 Depois de qualquer uma das chamadas acima, new_numbers será [10,20,30,40,50]. Logicamente o uso do método MAP neste caso é mais limpo e elegante.

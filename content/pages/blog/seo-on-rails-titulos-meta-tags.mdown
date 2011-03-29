@@ -17,76 +17,79 @@ As boas práticas recomendadas (White Hat) podem ser resumidas em: criar bom con
 
 ### Títulos e Meta-Tags
 
-Quem já teve um site indexado sabe da importância dada à tag com o título da página (<title>) e as chamadas meta-tags, com a descrição (<description>) e as palavras chaves (<keywords>), que vão no cabeçalho do HTML. Por isso, é importante que cada página da sua aplicação tenha conteúdos distintos nestas tags, algo que se encaixe com o conteúdo apresentado. Para facilitar esse trabalho, vou apresentar o plugin para Rails chamado [meta-tags][5].
+Quem já teve um site indexado sabe da importância dada à tag com o título da página (`<title>`) e as chamadas meta-tags, com a descrição (`<description>`) e as palavras chaves (`<keywords>`), que vão no cabeçalho do HTML. Por isso, é importante que cada página da sua aplicação tenha conteúdos distintos nestas tags, algo que se encaixe com o conteúdo apresentado. Para facilitar esse trabalho, vou apresentar o plugin para Rails chamado [meta-tags][5].
 
 Se você tem o GIT instalado, vá até a pasta da sua aplicação e execute:
 
-		:::bash
-		$ script/plugin install git://github.com/kpumuk/meta-tags.git
+    :::bash
+    $ script/plugin install git://github.com/kpumuk/meta-tags.git
 
 Feito isso, você já pode organizar melhor o conteúdo de suas meta-tags. Vejamos como utilizar o plugin em uma aplicação Rails, que para fins de exemplo, chamarei de "Locadora".
 
 No layout da aplicação (normalmente em app/views/layouts/application.html.erb), 
 use o helper **display_meta_tags**, da seguinte maneira:
 
-		:::ruby
-		<head>
-			<%= display_meta_tags :site => 'Locadora' %>
-		</head>
+    :::rhtml
+    <head>
+      <%= display_meta_tags :site => 'Locadora' %>
+    </head>
 
 
 Este método é responsável por inserir as tags e **title**, **description** e **keywords** no HTML. Depois, podemos configurar valores como o título da página para cada view, usando a seguinte chamada:
 
-		:::ruby
-		<h1>< %= title 'Locações pendentes' %></h1>
+    :::rhtml
+    <h1><%= title 'Locacoes pendentes' %></h1>
 
 
 Fazendo isso por exemplo, quando a página acima for mostrada, sua tag title será configurada de acordo com o conteúdo, no formato abaixo:
 
-		:::html
-		<head>
-			<title>Locadora | Locações pendentes</title>
-		</head>
+    :::rhtml
+    <head>
+      <title>Locadora | Locacoes pendentes</title>
+    </head>
 
-		<body>
-			<h1>Locações pendentes</h1>
-		</body>
-		
+    <body>
+      <h1>Locacoes pendentes</h1>
+    </body>
+
 
 É possível ainda setar o valor das tags diretamente dos controllers, acessando variáveis de instância:
 
-		:::ruby
-		@page_title = 'Locações pendentes'
-		@page_description = 'Lista de locações que ainda não foram devolvidas.'
-		@page_keywords = 'Locadora, Locações, Pendentes'
+    :::ruby
+    @page_title = 'Locacoes pendentes'
+    @page_description = 'Lista de Locacoes que ainda não foram devolvidas.'
+    @page_keywords = 'Locadora, Locacoes, Pendentes'
 
 
 Ou ainda, usando o método **set_meta_tags**:
 
-		:::ruby
-		set_meta_tags :title => 'Locações pendentes',
-			:description => 'Lista de locações que ainda não foram devolvidas.',
-			:keywords => 'Locadora, Locações, Pendentes'
+    :::ruby
+    set_meta_tags :title => 'Locacoes pendentes',
+      :description => 'Lista de Locacoes que ainda não foram devolvidas.',
+      :keywords => 'Locadora, Locacoes, Pendentes'
 
 
 Caso você queira, pode ainda usar opções extras para personalizar seus títulos: 
 
 **:prefix** - Para não mostrar o nome do site antes por exemplo, ou mostrar 
-outro conteúdo
+outro conteúdo. Ex.: 
 
-Ex.: <%= title 'Locações pendentes', :prefix => false %> #--> <title>Locações 
-pendentes</title>
+    :::rhtml
+    <%= title 'Locacoes pendentes', :prefix => false %>
+    <title>Locacoes pendentes</title>
 
-**:separator** - Texto usado para separar o nome do site do nome da página. 
+**:separator** - Texto usado para separar o nome do site do nome da página. Ex.: 
 
-Ex.: <%= title 'Locações pendentes', :separator => ":" %> #--> <title>Locadora 
-: Locações pendentes</title>
+    :::rhtml
+    <%= title 'Locacoes pendentes', :separator => ":" %>
+    <title>Locadora : Locacoes pendentes</title>
 
 **:reverse** - Quando verdadeiro, inverte a posição no nome do site e o nome 
-da página.
+da página. Ex.: 
 
-Ex.: <%= title 'Locações pendentes', :reverse => true %> #--> <title>Locações 
-pendentes | Locadora</title>
+    :::rhtml
+    <%= title 'Locacoes pendentes', :reverse => true %> 
+    <title>Locacoes    pendentes | Locadora</title>
 
 Outras opções e formas de uso são melhor detalhadas no arquivo **README.rdoc**, que se encontra na pasta do plugin.
 

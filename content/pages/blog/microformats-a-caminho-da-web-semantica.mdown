@@ -19,21 +19,21 @@ Agora, se eu utilizar certa padronização na formatação dos dados, e se esse 
 
 Especificamente para a padronização de informação sobre eventos existe o microformato chamado [hCalendar][6]. Vamos a um exemplo de código:
 
-		:::html
-		<div class="vevent">
-			<h3 class="summary">Campus Party Brasil</h3>
-			<p class="description">Campus Party é considerado o maior evento de entretenimento eletrônico em rede do mundo. Um encontro anual realizado desde 1997, que reúne, durante sete dias, milhares de participantes com seus computadores procedentes de toda a Espanha e de outras nações, com a finalidade de compartilhar curiosidades, trocar experiências e realizar todo o tipo de atividades relacionadas a computadores, às comunicações e às novas tecnologias*.</p>
-			<p>Será realizado de <abbr class="dtstart" title="2008-02-11">11</abbr> a <abbr class="dtend" title="2008-02-17">17 de fevereiro de 2008</abbr></p>
-			<p>Local: <span class="location">Bienal, São Paulo, SP</span></p>
-			<a class="url" href="http://www.campus-party.com.br/">http://www.campus-party.com.br/</a>
-		</div>
+    :::html
+    <div class="vevent">
+      <h3 class="summary">Campus Party Brasil</h3>
+      <p class="description">Campus Party é considerado o maior evento de entretenimento eletrônico em rede do mundo. Um encontro anual realizado desde 1997, que reúne, durante sete dias, milhares de participantes com seus computadores procedentes de toda a Espanha e de outras nações, com a finalidade de compartilhar curiosidades, trocar experiências e realizar todo o tipo de atividades relacionadas a computadores, às comunicações e às novas tecnologias*.</p>
+      <p>Será realizado de <abbr class="dtstart" title="2008-02-11">11</abbr> a <abbr class="dtend" title="2008-02-17">17 de fevereiro de 2008</abbr></p>
+      <p>Local: <span class="location">Bienal, São Paulo, SP</span></p>
+      <a class="url" href="http://www.campus-party.com.br/">http://www.campus-party.com.br/</a>
+    </div>
 
 
 _* Texto retirado do site da [campus party brasil][8]_
 
 ### Então só é preciso colocar as classes corretas nas tags de conteúdo do HTML?
 
-Basicamente, mas não apenas isso. Observe que ao atribuir a classe "description" à tag <p>, eu rotulo a informação da tag, deixando claro que seu conteúdo é a descrição do evento. Logicamente essa classe só tem valor semântico se estiver dentro de uma tag com a classe "vevent".
+Basicamente, mas não apenas isso. Observe que ao atribuir a classe "description" à tag `<p>`, eu rotulo a informação da tag, deixando claro que seu conteúdo é a descrição do evento. Logicamente essa classe só tem valor semântico se estiver dentro de uma tag com a classe "vevent".
 
 Além do atributo classe, o atributo "title" também é usado para informar conteúdo, como acontece com "dtstart". Note que em "title" o formato da data está em [ISSO 8601][9], que é um formato de fácil leitura para um robô de busca. Já o conteúdo da tag apresenta um valor humanizado, que será apresentado pelo navegador.
 
@@ -46,8 +46,8 @@ Esta é uma dúvida antiga minha. Para descobrir, fiz vários testes utilizando 
 Cheguei às conclusões:
 
 1. Em tags onde **apenas** o atributo "class" é levado em consideração para distinção semântica, como em "vevent","summary","description", a troca de tag pode ser realizada.
-2. Em tags onde outros atributos além de "class" formam o valor semântico, a troca não é possível. Isso ocorre em "dtstart", "dtend" e "url". Isso é bem compreensível, já que apenas a tag <a> possui o atributo "href" em uma página XHTML válida.
-3. Web semântica significa usar tags que façam sentido para seu conteúdo, como <p> para a descrição do evento. Poderíamos usar uma lista de definições <dl> por exemplo. Funcionaria, mas não estaríamos utilizando a tag mais adequada.
+2. Em tags onde outros atributos além de "class" formam o valor semântico, a troca não é possível. Isso ocorre em "dtstart", "dtend" e "url". Isso é bem compreensível, já que apenas a tag `<a>` possui o atributo "href" em uma página XHTML válida.
+3. Web semântica significa usar tags que façam sentido para seu conteúdo, como `<p>` para a descrição do evento. Poderíamos usar uma lista de definições `<dl>` por exemplo. Funcionaria, mas não estaríamos utilizando a tag mais adequada.
 
 
 ### Qual a vantagem de se utilizar esses padrões?

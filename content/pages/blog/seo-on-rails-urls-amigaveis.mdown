@@ -9,11 +9,11 @@ Deixar as URLs de sua aplicação amigáveis pode fazer uma grande diferença no
 
 Vejamos alguns exemplos de URLs complexas:
 
-> index.php?section=cine&category=comedy
+    index.php?section=cine&category=comedy
 
 ou
 
-> /cgi-bin/index.cgi?id=6F7YCH&page=6
+    /cgi-bin/index.cgi?id=6F7YCH&page=6
 
 ### Quais os problemas de ter URLs complexas?
 
@@ -29,69 +29,69 @@ Para quem usa Rails, principalmente da maneira [Restful][1], já tem esses probl
 
 Lista de filmes
 
-> http://locadora.com/filmes
+    http://locadora.com/filmes
 
 Detalhes de um filme com id igual a 12
 
-> http://locadora.com/filmes/12
+    http://locadora.com/filmes/12
 
 Novo filme
 
-> http://locadora.com/filmes/new
+    http://locadora.com/filmes/new
 
 Edição de um filme com id igual a 12
 
-> http://locadora.com/filmes/12/edit
+    http://locadora.com/filmes/12/edit
 
 
 Esse é um dos conceitos de [REST][2]: a URL deve descrever o recurso disponibilizado. 
 
 Acha que está bom? Está, mas podemos melhorar ainda mais. Não seria melhor se ao invés de identificadores numéricos, tivéssemos o próprio título do filme na URL? Por exemplo, a página com detalhes do filme teria a endereço:
 
-> http://locadora.com/filmes/de-volta-para-o-futuro
+    http://locadora.com/filmes/de-volta-para-o-futuro
 
 Existem algumas maneiras de fazer isso em um aplicação Rails. Uma bem simples é instalando o plugin [permalink_fu][3]:
 
-		::bash
-		$ script/plugin install git://github.com/cyu/permalink_fu 
+    :::bash
+    $ script/plugin install git://github.com/cyu/permalink_fu 
 
 
 Depois de instalado, basta fazer a seguinte chamada nosso Model Filme, para usar o campo título como identificador na URL:
 
-		:::ruby
-		class Filme 
-			has_permalink :titulo
-		end
+    :::ruby
+    class Filme 
+      has_permalink :titulo
+    end
 
 
 Logicamente o campo título terá seus caracteres especiais e espaços removidos para poder ser usado como endereço http.
 
 Essa abordagem só é viável quando o título do filme é único, pois ficaria impossível distinguir entre dois filmes com o mesmo título, já que ambos teriam a mesma URL. Para estes casos, podemos sobrescrever o método **to_params**, usando o helper **PermalinkFu.escape** do plugin para remover acentos e espaços do campo que queremos usar na composição do endereço:
 
-		:::ruby
-		class Filme 
-			def to_param
-				"#{id}-#{PermalinkFu.escape(titulo)}"
-			end
-		end
+    :::ruby
+    class Filme 
+      def to_param
+        "#{id}-#{PermalinkFu.escape(titulo)}"
+      end
+    end
 
 
 Assim, teríamos o formato:
 
-> http://locadora.com/filmes/12-de-volta-para-o-futuro
+    http://locadora.com/filmes/12-de-volta-para-o-futuro
 
 Essa solução causa um pequeno efeito colateral, já que o parâmetro recebido pelo controller em **params[:id]** não terá apenas um valor do tipo inteiro, mas sim uma string. Observe o exemplo de método show do controller de filmes:
 
-		:::ruby
-		class FilmesController 
- 			def show
- 				@filmes = Filme.find(params[:id].to_i)
-				respond_to do |format|
-					format.html # show.rhtml
-					format.xml { render :xml => @filmes.to_xml }
-				end
-			end
-		end
+    :::ruby
+    class FilmesController 
+      def show
+        @filmes = Filme.find(params[:id].to_i)
+        respond_to do |format|
+          format.html # show.rhtml
+          format.xml { render :xml => @filmes.to_xml }
+        end
+      end
+    end
 
 
 Note que é necessário uma conversão do paramêtro ID para o tipo inteiro, em **params[:id].to_i**, para que o **find** funcione corretamente.

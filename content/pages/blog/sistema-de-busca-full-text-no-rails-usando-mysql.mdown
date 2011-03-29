@@ -28,37 +28,37 @@ Para minha surpresa a solução se mostrou extremamente eficaz. O plugin faz uso
 
 Instalando o **acts_as_fulltextable**:
 
-		:::bash
-		script/plugin install http://wonsys.googlecode.com/svn/plugins/acts_as_fulltextable/ 
+    :::bash
+    script/plugin install http://wonsys.googlecode.com/svn/plugins/acts_as_fulltextable/ 
 
 
 Para adicionar atributos dos models ao índice, é necessário que a linha abaixo esteja no código da classe Model (arquivo Model.rb):
 
-		:::ruby
-		acts_as_fulltextable :atributo1, :atributo2, :atributo3
+    :::ruby
+    acts_as_fulltextable :atributo1, :atributo2, :atributo3
 
 
 Depois, cria-se uma migration através do gerador que acompanha o plugin, passando os models com campos indexados:
 
-		:::bash
-		script/generate fulltext_rows model1 model2 model3 ...
+    :::bash
+    script/generate fulltext_rows model1 model2 model3 ...
 
 
 Atualizamos a estrutura do banco:
 
-		::bash
-		rake db:migrate
+    :::bash
+    rake db:migrate
 
 E pronto, magicamente podemos chamar os métodos em nossos controllers
 
-		:::ruby
-		Model.find_fulltext('string de busca', :limit => 10, :offset => 0)
+    :::ruby
+    Model.find_fulltext('string de busca', :limit => 10, :offset => 0)
 
 Para buscar em um Model específico, limitando o número de respostas em 10, 
 ou ainda
 
-		:::ruby
-		FulltextRow.search('string de busca', :only => [:model1, :model2, :model3], :limit => 10, :offset => 0)
+    :::ruby
+    FulltextRow.search('string de busca', :only => [:model1, :model2, :model3], :limit => 10, :offset => 0)
 
 Para procurar em todos os models indexados, ou naqueles indicados em :only.
 
@@ -66,16 +66,16 @@ Para procurar em todos os models indexados, ou naqueles indicados em :only.
 
 Simples, basta colocar a seguinte linha na sua migration, substituindo NewModel pelo seu Model:
 
-		:::ruby
-		NewModel.find(:all).each {|i| i.create_fulltext_record}
+    :::ruby
+    NewModel.find(:all).each {|i| i.create_fulltext_record}
 
 
 > Quero paginar o resultado da busca com will_paginate. Tem como?
 
 A versão que está no repositório dos desenvolvedores já suporta will_paginate. Existe um código que verifica se o will_paginate está instalado e mostra o resultado através do seu método paginate. Logo, pode-se trocar os parâmetros :limit e :offset por :page normalmente:
 
-		:::ruby
-		FulltextRow.search('string de busca', :only => [:model1, :model2, :model3], :page => params[:page])[/sourcecode]
+    :::ruby
+    FulltextRow.search('string de busca', :only => [:model1, :model2, :model3], :page => params[:page])[/sourcecode]
 
 
 Se você está com problemas em implementar uma busca em seus site que seja case-insensitive e que ignore acentuação automaticamente, aceitando caracteres UFT-8, além de ser fácil de instalar e configurar, o acts_as_fulltextable foi feito pra você. 

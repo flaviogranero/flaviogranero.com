@@ -15,48 +15,48 @@ Uma solução simples seria usar o método _Model.find_by_name_ por exemplo, par
 
 Adicione ao environment.rb de sua aplicação:
 
-		::ruby
-		config.gem 'scoped_search',
+	:::ruby
+	config.gem 'scoped_search',
 
 Depois, execute o comando:
 
-		:::bash
-		$ rake gems:install
+	:::bash
+	$ rake gems:install
 
 
 ### Utilização:
 
 Basta adicionar uma linha no Model desejado, indicando os campos que serão usados na busca:
 
-		:::ruby
-		# user.rb
-		class User < ActiveRecord::Base
-			searchable_on :login, :name
-		end
+    :::ruby
+    # user.rb
+    class User < ActiveRecord::Base
+      searchable_on :login, :name
+    end
 
 Depois da alteração, a classe passa a contar com o escopo **search_for**, que
 pode ser usado em cascata com outros *named_scopes*. No exemplo abaixo de uma action "search" do controller de usuários, integra-se a busca com a paginação provida pelo _will_paginate_:
 
-		:::ruby
-		# users_controller.rb
-		def search
-			@users = User.search_for(params[:q]).paginate(:page => params[:page])
-			respond_to do |format|
-				format.html
-				format.xml{ render :xml => @users }
-			end
-		end
+    :::ruby
+    # users_controller.rb
+    def search
+      @users = User.search_for(params[:q]).paginate(:page => params[:page])
+      respond_to do |format|
+        format.html
+        format.xml{ render :xml => @users }
+      end
+    end
 
 
 
 Bem tranquilo. Para incrementar um pouco, podemos ainda adicionar campos de associações na busca. Supondo que o usuário tenha um perfil (profile), podemos adicionar o campo description pertencente ao perfil na busca, da seguinte maneira:
 
 
-		:::ruby
-		class User 
-			has_one :profile, :dependent => :destroy
-			searchable_on :login, :name, :profile_description
-		end
+    :::ruby
+    class User 
+      has_one :profile, :dependent => :destroy
+      searchable_on :login, :name, :profile_description
+    end
 
 
 No MySQL, pode-se ainda utilizar índices FULLTEXT nos campos mais requisitados, para aumentar a performance das buscas.
