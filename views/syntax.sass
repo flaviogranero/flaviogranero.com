@@ -1,11 +1,13 @@
 .CodeRay
-  background-color: #f8f8f8
-  border: 1px solid silver
-  font-family: 'Courier New', 'Terminal', monospace
-  color: #000
+  background-color: #232323
+  border: 1px solid black
+  font-family: 'Monaco', 'Courier New', 'Terminal', monospace
+  color: #E6E0DB
+  overflow: auto
   font-size: 12px
   pre
     margin: 0px
+    padding: 0px
   .line_numbers, .no
     background-color: #def
     color: gray
@@ -24,7 +26,7 @@
   .af
     color: #00C
   .an
-    color: #007
+    color: #E7BE69
   .at
     color: #f08
   .av
@@ -35,19 +37,18 @@
     color: #509
     font-weight: bold
   .c
-    color: #888
+    color: #BC9358
+    font-style: italic
   .ch
-    color: #04D
+    color: #509E4F
     .k
       color: #04D
     .dl
       color: #039
   .cl
-    color: #B06
-    font-weight: bold
+    color: #FFF
   .co
-    color: #036
-    font-weight: bold
+    color: #BC9458
   .cr
     color: #0A0
   .cv
@@ -80,40 +81,28 @@
     color: #F00
     font-weight: bold
   .fl
-    color: #60E
-    font-weight: bold
+    color: #A4C260
   .fu
-    color: #06B
-    font-weight: bold
+    color: #FFC56D
   .gv
-    color: #d70
-    font-weight: bold
+    color: #D0CFFE
   .hx
     color: #058
-    font-weight: bold
   .i
-    color: #00D
-    font-weight: bold
+    color: #A4C260
   .ic
     color: #B44
-    font-weight: bold
   .il
-    background: #eee
-    color: black
-    .il
-      background: #ddd
-      .il
-        background: #ccc
+    color: #eee
     .idl
-      font-weight: bold
-      color: #777
+      color: #fff
   .im
     color: #f00
   .in
     color: #B2B
     font-weight: bold
   .iv
-    color: #33B
+    color: #D0CFFE
   .la
     color: #970
     font-weight: bold
@@ -127,13 +116,12 @@
     font-weight: bold
   .op
   .pc
-    color: #038
-    font-weight: bold
+    color: #6C9CBD
   .pd
     color: #369
     font-weight: bold
   .pp
-    color: #579
+    color: #E7BE69
   .ps
     color: #00C
     font-weight: bold
@@ -141,8 +129,7 @@
     color: #349
     font-weight: bold
   .r
-    color: #080
-    font-weight: bold
+    color: #CB7832
   .ke
     color: #808
     .dl
@@ -152,7 +139,7 @@
   .vl
     color: #088
   .rx
-    background-color: #fff0ff
+    color: #A4C260
     .k
       color: #808
     .dl
@@ -163,8 +150,7 @@
       color: #404
       font-weight: bold
   .s
-    background-color: #fff0f0
-    color: #D20
+    color: #A4C260
     .s
       background-color: #ffe0e0
       &.s
@@ -173,7 +159,7 @@
     .ch
       color: #b0b
     .dl
-      color: #710
+      color: #A4C260
   .sh
     background-color: #f0fff0
     color: #2B2
@@ -181,15 +167,15 @@
     .dl
       color: #161
   .sy
-    color: #A60
+    color: #6C9CBD
     .k
       color: #A60
     .dl
       color: #630
   .ta
-    color: #070
+    color: #E7BE69
   .tf
-    color: #070
+    color: #E7BE69
     font-weight: bold
   .ts
     color: #D70
@@ -203,6 +189,7 @@
     color: #444
   .ins
     background: #afa
+    color: #080
   .del
     background: #faa
   .chg
@@ -211,9 +198,6 @@
   .head
     color: #f8f
     background: #505
-  .ins .ins
-    color: #080
-    font-weight: bold
   .del .del
     color: #800
     font-weight: bold

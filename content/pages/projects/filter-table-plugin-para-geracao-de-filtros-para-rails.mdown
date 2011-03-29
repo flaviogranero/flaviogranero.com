@@ -25,9 +25,9 @@ Para usar o plugin, basta adicionar uma chamada ao método __filter_attributes__
     class CarsController < ApplicationController
       filter_attributes :status
 
-        def index
-          @cars = Car.paginate :page => params[:page], :conditions => filter_conditions 
-        end
+      def index
+        @cars = Car.paginate :page => params[:page], :conditions => filter_conditions 
+      end
     end
 
 
