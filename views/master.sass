@@ -54,8 +54,8 @@ ol,
 p,
 pre,
 ul
-  margin: 0
-  margin-bottom: $base-vertical-margin
+  margin: 10px 0px
+  //margin-bottom: $base-vertical-margin
 
 li
   @include adjust-font-size(1, 0, 0)
@@ -172,7 +172,14 @@ body
 article
   img
     max-width: 100%
-    margin-bottom: $base-vertical-margin
+    border: 1px solid 
+    border-color: $disabled-border-color
+    padding: 3px
+    //margin-bottom: $base-vertical-margin
+  blockquote
+    img
+      margin: 5px
+      float: right
 
   code,
   pre
@@ -227,7 +234,7 @@ section.articles
       text-shadow: none
     p.read_more
       @include adjust-font-size(1, 0, 0)
-      margin-top: -$base-vertical-margin
+      //margin-top: $base-vertical-margin
     footer
       border-top: none
 

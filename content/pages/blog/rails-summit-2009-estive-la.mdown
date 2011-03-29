@@ -6,13 +6,13 @@ Summary: A segunda edição do evento foi ainda melhor.
 
 ## A Viajem
 
-![Eu, Ricardo e Chad][1]
+> ![Eu, Ricardo e Chad][1]
 
 Foi cansativo, mas mais uma vez valeu muito a pena. Desta vez não conseguimos interessados suficientes para organizar uma caravana paranaeense, então nos aventuramos eu e o [RicardoK][2] a viajar de Londrina até São Paulo de ônibus. A viajem corria bem, até percebermos que era volta de feriado prolongado e que enfrentaríamos mais de 100km de trânsito lento. Chegamos com mais de 3 horas de atraso, mas ainda assim com muito tempo para descansar antes do evento. Fiquei no mesmo hotel do ano passado, perto do metrô tietê, onde havia combinado de dividir o quarto com o [Leonardo Faria][3], programador de Divinópolis-MG que até então não conhecia pessoalmente.
 
 ## O Evento
 
-![Eu e Vinicius Teles][4]
+> ![Eu e Vinicius Teles][4]
 
 A RailsSummit 2009 aconteceu nos dias 13 e 14 de outubro, no Centro de Convenções Anhembi. Foi a segunda edição do maior evento sobre o tema na América Latina. Estive presente também na primeira edição, que foi bem organizada e teve um valor especial para mim, pois foi onde [consegui meu emprego atual][5]. Devido a isso, já tínhamos uma expectativa muito boa para a edição desse ano, só não acreditava que seria possível um evento melhor que o do ano passado. Mas foi… 
 
@@ -23,7 +23,7 @@ Quanto às palestras, mais uma vez tivemos temas variados abordados por grandes 
 
 ## Encontros
 
-![Jony, Herval, Leozera, Eu e RicardoK][12]
+> ![Jony, Herval, Leozera, Eu e RicardoK][12]
 
 Participar de um grande evento como foi o Rails Summit também é uma ótima oportunidade para rever amigos que moram em outras cidades ou estados, e ainda para conhecer aqueles desenvolvedores que você só reconhece o avatar das redes sociais, twitter e IMs. Reencontrei o pessoal do paraná ([Ozéias][13], [Davis][14], [Zé Gomes][15], [Maurício][16]) e de outros estados ([Thiago Freire][17], [Jony][18]), e também conheci alguns railers pessoalmente pela primeira vez ([Leonardo Faria][6], [Herval][19], [Roberto Soares][20], [Diego][21] e [George Guimarães][22]). 
 
