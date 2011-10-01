@@ -24,6 +24,7 @@ body
   color: $base-color
 
 header[role=banner]
+  font-family: 'Droid Serif', Georgia, serif
   h1,
   h2
     margin: 0
@@ -41,7 +42,7 @@ header[role=banner]
   
 
 h1, h2, h3, h4, h5, h6
-  font-family: Georgia, serif
+  font-family: 'Droid Serif', Georgia, serif
 h1
   @include adjust-font-size($h1-scale, 0.6, 0.4)
   font-weight: normal
@@ -241,6 +242,39 @@ section.articles
       //margin-top: $base-vertical-margin
     footer
       border-top: none
+
+nav#menu
+  border-bottom: 1px dotted
+  border-color: lighten($base-color, 50%)
+  // @include adjust-font-size(0.9, 0, 0)
+  a
+    margin-right: 10px
+    padding: 4px 0px
+    color: lighten($base-color, 25%)
+  a:hover
+    color: $base-color
+
+nav#social
+  float: right
+  a
+    font-size: 70%
+    display: inline-block
+    width: 16px
+    height: 12px
+    opacity: 0.6
+    &:hover
+      opacity: 1
+    span
+      display: none
+    &.feed
+      background: #fff url(/feed.png) no-repeat center center
+    &.twitter
+      background: #fff url(/twitter.png) no-repeat center center
+    &.linkedin
+      background: #fff url(/linkedin.png) no-repeat center center
+    &.plus
+      background: #fff url(/plus.png) no-repeat center center
+
 
 nav.categories
   h1

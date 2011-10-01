@@ -2,4 +2,17 @@
   %hgroup
     %h1
       %a{:href => "/"}= @heading
-    %h2= @subtitle
+    %nav#social
+      %a.feed{:href => "http://feeds.feedburner.com/flaviogranero", :title => "Subscribe to articles feed."}
+        %span Feed
+      %a.twitter{:href => "http://twitter.com/flaviogranero", :title => "Follow me on twitter."}
+        %span Twitter
+      %a.linkedin{:href => "http://linkedin.com/in/flaviogranero", :title => "Visit my linkedin profile."}
+        %span LinkedIn
+      %a.plus{:href => "http://flaviogranero.tumblr.com", :title => "Check my bookmarks in tumblr."}
+        %span LinkedIn
+    %nav#menu
+      %a{:href => "/blog"} Blog
+      %a{:href => "/projects"} Projects
+      %a{:href => "/about"} About
+      %a{:href => "/contact"} Contact
