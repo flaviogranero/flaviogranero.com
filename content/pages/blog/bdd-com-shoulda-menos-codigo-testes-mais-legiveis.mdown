@@ -1,5 +1,5 @@
 Date: Sat, 19 Jul 2008 20:48:49 +0000
-Categories: rails, TDD
+Categories: blog
 Summary: Testes unitários mais legíveis e sucintos usando Shoulda
 
 # BDD com Shoulda: Menos código, testes mais legíveis

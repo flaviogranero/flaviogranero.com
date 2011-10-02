@@ -1,5 +1,5 @@
 Date: Fri, 25 Apr 2008 12:48:32 +0000
-Categories: rails
+Categories: blog
 Summary: Quando se precisa prover busca em um sistema simples, uma boa forma de fugir dos mecanismos complexos é apostar no MySQL
 
 # Sistema de busca Full-Text no Rails usando MySQL

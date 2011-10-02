@@ -1,5 +1,5 @@
 Date: Fri, 26 Dec 2008 20:18:40 +0000
-Categories: rails, gems
+Categories: blog
 Summary: A gem scoped_search facilita a definição de buscas utilizando vários campos de um Model com uma query language poderosa
 
 # Ruby Gem: Escopo de busca fácil no ActiveRecord

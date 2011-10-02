@@ -1,5 +1,5 @@
 Date: Thu, 26 Jun 2008 17:27:04 +0000
-Categories: rails, case
+Categories: blog
 Summary: Como o YellowPages.com migrou de Java para Ruby e continuou atendendo 48 milhões de requisições por dia
 
 # Movendo o YellowPages.com para Rails: Um caso de sucesso

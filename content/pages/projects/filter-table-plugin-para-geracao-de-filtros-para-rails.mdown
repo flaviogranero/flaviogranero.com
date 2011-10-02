@@ -1,5 +1,5 @@
 Date: Sat, 18 Apr 2009 21:08:21 +0000
-Categories: plugin, rails
+Categories: projects
 Summary: Um plugin para Ruby on Rails que possibilita uma forma simples para filtragem de dados, principalmente em páginas administrativas.
 
 # Filter Table: Plugin para geração de filtros para Rails

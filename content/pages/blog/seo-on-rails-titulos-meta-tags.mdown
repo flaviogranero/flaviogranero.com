@@ -1,5 +1,5 @@
 Date: Mon, 06 Oct 2008 03:10:29 +0000
-Categories: rails, seo
+Categories: blog
 Summary: Utilize o plugin meta-tags para gerenciar o conteúdo das páginas que são importantes para os mecanismos de busca
 
 

@@ -1,5 +1,5 @@
 Date: Wed, 19 Mar 2008 13:48:23 +0000
-Categories: microformats, web
+Categories: blog
 Summary: O que são microformats e como aplicá-los para tornar um website mais acessível
 
 # Microformats: A caminho da Web Semântica

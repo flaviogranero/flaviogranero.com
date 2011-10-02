@@ -1,5 +1,5 @@
 Date: Thu, 09 Oct 2008 03:04:30 +0000
-Categories: rails, seo
+Categories: blog
 Summary: Dicas de como ter URLs mais direcionadas a mecanismos de busca em uma aplicação Rails
 
 # SEO on Rails: URLs Amigáveis

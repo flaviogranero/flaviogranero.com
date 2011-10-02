@@ -1,5 +1,5 @@
 Date: Tue, 25 Nov 2008 22:29:29 +0000
-Categories: rubyconf, job
+Categories: blog
 Summary: O maior evento sobre Ruby on Rails do Brasil e meu primeiro emprego para trabalhar com a tecnologia
 
 # Rails Summit: Emprego Novo!

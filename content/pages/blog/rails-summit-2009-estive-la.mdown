@@ -1,5 +1,5 @@
 Date: Tue, 27 Oct 2009 02:16:56 +0000
-Categories: rubyconf
+Categories: blog
 Summary: A segunda edição do evento foi ainda melhor.
 
 # Rails Summit 2009: Estive lá

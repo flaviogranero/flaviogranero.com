@@ -1,5 +1,5 @@
 Date: Thu, 27 Mar 2008 20:42:11 +0000
-Categories: REST
+Categories: blog
 Summary: Introdução a arquitetura de software orientado a recursos e ao padrão REST
 
 # Conhecendo REST
