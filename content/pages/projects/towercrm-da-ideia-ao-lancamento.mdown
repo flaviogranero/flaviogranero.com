@@ -1,0 +1,71 @@
+Date: 18 January 2012
+Categories: projects
+Summary: Um pouco da história do TowerCRM, um aplicativo criado a partir de uma necessidade e posteriormente transformado em produto, um CRM para imobiliárias.
+
+# TowerCRM: da idéia ao lançamento
+
+## Solucionando nosso próprio problema
+
+> [![logotipo imobilon](/attachments/imobilon.png)][1]
+
+Estávamos no início de 2010 quando minha esposa foi convidada para participar da fundação de uma nova [imobiliária em Londrina][1]. Estava nascendo a [Imobilon - Excelência em Negócios Imobiliários][2].
+
+Começo contando isso, porque o início da [Imobilon][2] está muito ligado à idéia do assunto deste texto: o [TowerCRM][3].
+
+Nos meses que se passaram até a inauguração e início dos trabalhos da [Imobilon][2], eu acabei fazendo o papel de consultor de TI. A imobiliária tinha uma necessidade específica: queria se diferenciar da concorrência através do atendimento ao cliente e não tinha um forte capital para investir em anúncios de mídia tradicional (jornais e revistas). Portanto passou a ser prioridade ter um bom website, que trouxesse bons negócios a um baixo custo.
+
+Alguns corretores que vieram formar a equipe da [Imobilon][2] já tinham uma experiência prévia com um sistema [CRM][4] em uma construtora da cidade e entendiam que ter um sistema assim trazia uma boa vantagem competitiva. Fomos a procura de soluções no mercado, mas acabamos encontrando poucas adequadas, porque não queríamos investir em servidores caros ou licenças de  software (tínhamos adquirido máquinas simples rodando [Ubuntu][11]) e precisávamos de algo fácil, que corretores pudessem utilizar sem dificuldades. 
+Pesquisando, encontramos soluções dos seguintes tipos:
+
+* __Sistemas desktop__, que precisavam de licenças Windows e um servidor com [Remote Desktop Services][5] se desejássemos acesso remoto, além de taxas de implantação altas;
+* __Sistemas CRM rodando no navegador__, mas em inglês ou não específicos para imobiliárias, além de possuírem uma curva de aprendizagem alta;
+* __Sistemas web mais baratos__, mas que não tinham a função de ser um CRM e sim  gerenciadores de conteúdo do website da imobiliária.
+  
+Precisávamos de algo que fosse um [__sistema CRM integrado ao website da imobiliária__][3]. Como pode-se imaginar, decidi desenvolver uma solução própria, mas que posteriormente pudesse ser transformada em produto e oferecida a outras imobiliárias.
+
+## O desenvolvimento
+
+Desde o começo de meu trabalho como desenvolvedor web, criar um produto sempre foi um objetivo, e acompanhei diversos casos na área de tecnologia, de empresas surgindo a partir de necessidades vivenciadas pelos fundadores.
+
+O [TowerCRM][3] se enquadra perfeitamente neste caso. O sistema foi sendo desenvolvido aos poucos, onde cada nova funcionalidade era colocada em produção e testada diretamente pela [equipe da Imobilon][6]. Foram vários meses recebendo sugestões, melhorando a usabilidade e resolvendo necessidades que surgiam. Em várias oportunidades passei tardes com a equipe, observando quais dificuldades surgiam ao usar a aplicação, principalmente em corretores que estavam começando. Consegui perceber quais eram os principais casos de uso, e otimizar o sistema para ser mais eficiente nesses casos.
+
+Além do conhecimento dos corretores mais experientes, que trouxeram as situações que um [CRM imobiliário][3] precisa solucionar, pude também aplicar outros conhecimentos de desenvolvimento web, para entregar algo que muitas vezes os surpreendiam. Um dos sistemas que mais me influenciou foi o [Highrise][7], da 37 signals, que é um [CRM][4] simples e muito utilizado. O que faltava era torná-lo um software de um nicho mais específico, no meu caso um [CRM para imobiliárias][3]. 
+
+Com o [TowerCRM][3] os corretores podem registrar eventos/atendimentos não só em contatos, mas também em imóveis e negócios, e ainda publicar imóveis e receber interessados através do website de acesso público. O website por sua vez utiliza técnicas comprovadas de [SEO][10] para trazer visitantes que utilizam mecanismos de busca como o Google, conseguindo ser independente de portais verticais.
+
+## Transformando em produto
+
+Quando percebemos que o sistema já estava maduro o suficiente, chegou o momento de transformá-lo em um produto. É claro que sempre existem novas requisições e outras idéias que eu gostaria de implementar, mas entendo ser importando colocar o produto no mercado, para ter retorno de outros clientes, e assim adaptar, evoluir e retornar com um produto cada vez melhor.
+
+Pude comprovar que muitos estavam certos quando diziam: "fazer um sistema é apenas um passo, fazer um produto é algo muito mais trabalhoso". Foram mais alguns meses até que várias etapas fossem concluídas. Era necessário que o sistema isolasse os dados de cada conta por subdomínio, que o website da imobiliária fosse um aplicativo separado que consumisse uma API do CRM, que o servidor estivesse preparado para armazenar mais dados. Depois disso pronto, faltava um website e uma estratégia de vendas para o [TowerCRM][3], faltava um sistema de ajuda aos usuários e finalmente, faltava definir quais seriam os valores e o modelo de negócio.
+
+Tudo foi concluído em Novembro de 2011, como pode ser conferido no [post de lançamento do TowerCRM][12].
+
+[![logotipo towercrm](/attachments/towercrm.png)][3]
+
+
+## Tenho um produto, e agora?
+
+Um dos livros que eu mais gostei nesse período de aprendizado sobre produtos e startups, foi o ["Start Small Stay Small"][7] escrito por [Rob Walling][9]. Nele o autor descreve muito bem os passos que ele usou para conseguir lançar aplicativos web como produtos de sucesso. Como ele cita no livro, o software é somente 30% do trabalho, o restante se encontra em marketing, vendas, suporte, atendimento, etc. É nesse restante que estamos focando agora, sem deixar, é claro, de atender necessidades que detectamos ser de importância estratégica.
+
+Tenho visitado pessoalmente imobiliárias aqui em Londrina, para apresentar o [TowerCRM][3]. Percebo que consultores imobiliários que já trabalharam com um  [CRM][4] alguma vez, enxergam o valor do produto. Outros que utilizam sistemas complexos, entendem as vantagens da facilidade de uso, da não necessidade de treinamentos custosos. Ninguém deixou transparecer que usar um sistema web seria um problema, pelo contrário, todos querem acessar suas informações de qualquer lugar, sem precisar adquirir servidores. Ter alguém que vai cuidar do website da empresa também é muito bem visto. Muitos ou dependem de portais para atrair clientes, ou têm websites que não trazem o retorno desejado, ou ainda nem possuem um website.
+
+Claro que nem tudo são flores. Muitos administradores têm receio da forma como  o sistema lida com os dados, promovendo o constante compartilhamento de informações entre todos da equipe. Mas acreditamos que as vantagens são muito maiores quando a empresa trabalha dessa forma, do que com informações centralizadas e processos burocráticos.
+
+O [TowerCRM][3] foi lançado, o primeiro produto de uma startup responsável por trazer mais negócios à seus clientes do mercado imobiliário.
+
+Nos próximos textos, pretendo continuar compartilhando aqui a experiência obtida com minha startup. Deixe seu comentário!
+
+
+[1]: http://www.imobilon.com.br/imobiliaria-londrina "A sua imobiliária em Londrina"
+[2]: http://www.imobilon.com.br "Imobilon - Excelência em negócios imobiliários"
+[3]: http://towercrm.com.br "TowerCRM - Sistema CRM e Site para imobiliárias"
+[4]: http://pt.wikipedia.org/wiki/Customer_relationship_management
+[5]: http://pt.wikipedia.org/wiki/Terminal_Service
+[6]: http://www.imobilon.com.br/quem-somos "Equipe Imobilon"
+[7]: http://highrisehq.com
+[8]: http://www.startupbook.net/
+[9]: http://www.softwarebyrob.com/
+[10]: http://pt.wikipedia.org/wiki/Otimiza%C3%A7%C3%A3o_para_motores_de_busca
+[11]: http://www.ubuntu-br.org/
+[12]: http://blog.towercrm.com.br/towercrm-tenha-um-crm-especialmente-desenvolv "Lançamento do TowerCRM"
