@@ -6,7 +6,7 @@ Summary: Um pouco da história do TowerCRM, um aplicativo criado a partir de uma
 
 ## Solucionando nosso próprio problema
 
-> [![logotipo imobilon](/attachments/imobilon.png)][1]
+> [![logotipo imobilon](http://flaviogranero.com/attachments/imobilon.png)][1]
 
 Estávamos no início de 2010 quando minha esposa foi convidada para participar da fundação de uma nova [imobiliária em Londrina][1]. Estava nascendo a [Imobilon - Excelência em Negócios Imobiliários][2].
 
@@ -41,7 +41,7 @@ Pude comprovar que muitos estavam certos quando diziam: "fazer um sistema é ape
 
 Tudo foi concluído em Novembro de 2011, como pode ser conferido no [post de lançamento do TowerCRM][12].
 
-[![logotipo towercrm](/attachments/towercrm.png)][3]
+[![logotipo towercrm](http://flaviogranero.com/attachments/towercrm.png)][3]
 
 
 ## Tenho um produto, e agora?
