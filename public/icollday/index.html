@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>O que faz um desenvolvedor web</title>
+
+		<meta name="description" content="Jelly Week 2013 - Aldeia Coworking">
+		<meta name="author" content="Flavio Granero">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+				<section>
+          <h3>O que faz um</h3>
+					<h1>desenvolvedor Web</h1>
+				</section>
+
+				<section>
+					<h2>Flávio Granero</h2>
+					<p>10 anos desenvolvendo software</p>
+          <p>7 anos desenvolvendo para Web</p>
+          <p>http://flaviogranero.com</p>
+				</section>
+        
+				<section>
+					<h2>O que faz um desenvolvedor Web?</h2>
+					<p>Cria sistemas que são accesíveis através de uma conexão com a internet</p>
+          <img width="787" height="190" class="transparent" src="images/web_application.001.png" alt="Web Application">
+				</section>
+        
+				<section>
+					<h2>Se eu quiser um blog, ele faz?</h2>
+					<p>Faz sim, mas pode fazer bem mais do que isso.</p>
+				</section>
+        
+				<section>
+					<h2>Tipos de Software</h2>
+					<img width="744" height="258" src="images/tipos_de_software.png" alt="Tipos de Software" class="transparent">
+				</section>
+        
+				<section>
+					<h2>Partes de um sistema web</h2>
+					<img width="781" height="226" src="images/front_and_back.png" alt="Front and Back" class="transparent">
+				</section>
+        
+				<section>
+					<h2>Back-end permite integrações</h2>
+					<img width="793" height="398" src="images/integrations.png" alt="Integrations" class="transparent">
+				</section>
+        
+        
+				<section>
+					<h2>Trabalhar Remoto</h2>
+					<img width="628" height="353" src="images/remote_work.jpg" alt="Remote Work">
+				</section>
+        
+				<section>
+					<h2>SR Education Group</h2>
+					<img width="995" height="486" src="images/sr_education.png" alt="SR Education Group">
+					<aside class="notes">
+            CMS, SEO, migração de sistema antigo. 15 funcionários.
+					</aside>
+				</section>
+        
+				<section>
+					<h2>Inaka</h2>
+          <p>Los Angeles, Buenos Aires</p>
+					<img width="800" height="532" src="images/inaka_team.jpeg" alt="Inaka Team">
+					<aside class="notes">
+            Aplicações em tempo real, integração de tecnologias, escalabilidade
+					</aside>
+				</section>
+        
+				<section>
+					<h2>Fox News</h2>
+          <img width="463" height="500" src="images/foxnews.png" alt="Fox News">
+				</section>
+        
+				<section>
+					<h2>Viacom</h2>
+					<img width="320" height="480" src="images/viacom.jpeg" alt="Viacom">
+				</section>
+        
+				<section>
+					<h2>Buenos, entonces...</h2>
+          <img width="404" height="539" src="images/bueno_entonces.jpeg" alt="Bueno Entonces app">
+				</section>
+        
+				<section>
+					<h2>Liftopia</h2>
+          <img src="images/liftopia.png" alt="Liftopia Challenge">
+				</section>
+        
+				<section>
+					<h2>Whisper.sh</h2>
+					<img width="640" height="568" src="images/whisper.jpg" alt="Whisper.sh">
+				</section>
+        
+				<section>
+					<h2>TowerCRM</h2>
+					<img src="images/towercrm.png" alt="TowerCRM">
+				</section>
+        
+				<section data-state="blackout">
+					<h1>Obrigado!</h1>
+          <h3>flavio@flaviogranero.com</h3>
+        </section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
