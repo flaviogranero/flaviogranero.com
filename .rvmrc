@@ -1,1 +1,1 @@
-rvm ruby-1.9.2-p180@fg
+rvm ruby-2.1.2@fg --create
