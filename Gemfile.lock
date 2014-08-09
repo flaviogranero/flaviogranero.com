@@ -3,6 +3,8 @@ GEM
   specs:
     RedCloth (4.2.9)
     coderay (0.9.7)
+    daemons (1.1.9)
+    eventmachine (1.0.3)
     haml (4.0.5)
       tilt
     nesta (0.10.0)
@@ -25,6 +27,10 @@ GEM
       rack (~> 1.4)
       rack-protection (~> 1.4)
       tilt (~> 1.3, >= 1.3.4)
+    thin (1.6.2)
+      daemons (>= 1.0.9)
+      eventmachine (>= 1.0.0)
+      rack (>= 1.0.0)
     tilt (1.4.1)
 
 PLATFORMS
@@ -34,3 +40,4 @@ DEPENDENCIES
   coderay
   nesta (= 0.10.0)
   rack-codehighlighter
+  thin
