@@ -1,0 +1,98 @@
+Date: 24 March 2015
+Categories: blog
+Summary: Primeira parte do artigo mostrando como podemos ordenar items por popularidade ao estilo Reddit em uma aplicação Ruby, com a ajuda de uma função SQL e Elastic.
+
+# Ordenando por popularidade ao estilo Reddit usando Ruby, PostgreSQL e Elastic, parte 1
+
+Tomemos como exemplo um aplicativo simples, onde usuários podem postar imagens, e essas imagens podem receber votos positivos (upvotes) e votos negativos (downvotes). Algo como uma versão simplificada do [Imgur](http://imgur.com/), mas que mesmo simples ainda tenha que lidar com um grande volume de novas postagens periodicamente. Uma das funcionalidades principais desse aplicativo seria mostrar uma __lista de imagens ordenada por popularidade__ na sua página principal.
+
+## Ordenação simples pelo Score
+
+Uma forma simples de construir essa lista seria calcular o __score__ de cada postagem como sendo a diferença entre os upvotes e os downvotes, ordenando então por esse valor.
+
+Porém é conhecido que classificar pela [simples diferença entre votos positivos e negativos gera distorções no ranking](http://www.evanmiller.org/how-not-to-sort-by-average-rating.html), pois os downvotes passam a ter muito peso na classificação. 
+
+Em nosso exemplo, mesmo que usemos [a fórmula Wilson Score](http://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval#Wilson_score_interval) como sugerido para obter-se uma ordenação mais confiável, isso não solucionaria a questão por completo.
+
+Isso porque nossa aplicação tem um problema conhecido dos [agragadores sociais](http://en.wikipedia.org/wiki/Social_network_aggregation), como o [Hacker News](https://news.ycombinator.com/), [Reddit](http://www.reddit.com/), [Imgur](http://imgur.com), [Stumbleupon](https://www.stumbleupon.com/), [Delicious](https://delicious.com/), entre outros que recebem uma grande quantidade de postagens diariamente. Se em nosso exemplo aplicássemos uma ordenação dessa natureza, postagens que receberam muitos votos positivos ficariam sempre nas primeiras posições, levando muito tempo para que novas imagens ultrapassasem o score das antigas. Além disso, quanto maior o número de imagens publicadas, mais difícil seria para os usuários encontrar postagens recentes, porque as mais antigas tomariam todas as posições iniciais. 
+
+Ter a lista de imagens populares atualizada constantemente é importante para manter os usuários interessados no conteúdo, retornando sempre para conferir os items "quentes" do momento.
+
+## Conhecendo Hot Score
+
+Como então manter a lista com items mais bem votados e ao mesmo tempo dar a chance para que postagens novas apareçam bem ranqueadas? A solução está em levar em consideração um outro valor além do score durante a ordenação: __a idade da postagem__. O que queremos é que votos em postagens recentes tenham mais peso, e que esses mesmos votos tenham pesos cada vez menores quando a idade da postagem aumenta. Para isso, precisamos de um algoritmo que utilize uma fórmula derivada de [Exponential Decay](http://en.wikipedia.org/wiki/Exponential_decay), onde temos uma constante que faz o score cair com o passar do tempo. Variando esse valor, podemos ter variações como a mostrada nesse gráfico de score x tempo:
+
+![Exponential Decay Chart](/attachments/hotscore/exponential-decay.png)
+_Fonte: wikipedia_
+
+
+O artigo de Amir Salihefendic chamado [Como o Ranking do Reddit funciona (em inglês)](http://amix.dk/blog/post/19588) mostra através de funcões escritas em python e fórmulas matemáticas como construir um algoritmo de Hot Score. Essa tecnologia não é exclusiva do Reddit, como mencionado acima praticamente todos os agregadores sociais que precisam ranquear grandes volumes de novos items utilizam alguma variação, adaptando-o as suas necessidades e passando a considerar outros fatores no momento de calcular o score. Nossa objetivo aqui não é mostrar essas variações, mas como construir um ranking simples baseado em upvotes, dowvotes e a idade das postagens em uma aplicação Ruby (on Rails). O que queremos é um score variando como no gráfico abaixo, onde o eixo x representa a passagem do tempo após a data de submissão do item:
+
+![reddit_score_time](/attachments/hotscore/reddit_score_time.png)
+_Fonte: amix.dk/blog_
+
+
+## Aplicando Hot Score com PostgreSQL
+
+No [repositório decay do usuário clux no github](https://github.com/clux/decay) encontramos alguns famosos algoritmos de ordenação por popularidade implementados em javascript, incluindo a "redditHot" que queremos aplicar aqui. Poderíamos portar essa função para Ruby, mas como o próprio Reddit disponibiliza suas funções de ranqueamento como funções SQL [em seu repositório no Github](https://github.com/reddit/reddit/blob/master/sql/functions.sql) preferimos fazer o cálculo diretamente no banco de dados, aproveitando assim a boa performance oferecida pelo [PostgreSQL](http://www.postgresql.org/).
+
+Em nossa aplicação Rails, criamos a seguinte [migration](http://guides.rubyonrails.org/active_record_migrations.html):
+
+    :::ruby
+    class AddHotScoreFunction < ActiveRecord::Migration
+      def up
+        execute <<-SQL
+          create or replace function
+            hot_score(ups integer, downs integer, date timestamp with time zone)
+            returns numeric as $$
+            select round(cast(log(greatest(abs($1 - $2), 1)) * sign($1 - $2) +
+              (date_part('epoch', $3) - 1134028003) / 45000.0 as numeric), 7)
+          $$ language sql immutable;
+        SQL
+      end
+
+      def down
+        execute "DROP FUNCTION IF EXISTS hot_score(integer, integer, timestamp);"
+      end
+    end
+
+Temos então uma função que usa uma escala logarítmica aplicada ao score (upvotes - downvotes) somando-se a um valor proporcional a idade do item, que é calculado a partir da data de criação passada no terceiro parametro. Uma descrição mais detalhada dessa fórmula matemática é vista em "[Reddit, Stumbleupon, Del.icio.us and Hacker News Algorithms Exposed!](http://moz.com/blog/reddit-stumbleupon-delicious-and-hacker-news-algorithms-exposed)" publicado no blog da Moz.
+
+A vantagem de termos uma função SQL é que podemos calcular o Hot Score de um Post com um simples "select" no banco de dados. Aqui vemos um possível [scope do ActiveRecord](http://guides.rubyonrails.org/active_record_querying.html#scopes) aplicado a um model __Post__:
+
+    :::ruby
+    # app/models/post.rb
+    class Post < ActiveRecord::Base
+      belongs_to :user
+      #...
+      scope :ranking, -> { select("id, image_url, user_id, created_at,
+       hot_score(up_score, down_score, created_at) as hot_score").
+       order_by("hot_score desc") }
+      #...
+    end
+
+    # retornando os primeiros 10 itens do ranking
+    Post.ranking.limit(10)
+
+
+É claro que essa é uma solução rápida, mas também é o que chamamos de "não escalável". Assim que o número de registros na tabela "posts" começar a crescer, vamos ter uma queda de performance considerável. Isso acontece porque o banco de dados precisa calcular o __hot_score()__ de cada item, para construir a ordenação. Vejamos uma análise da query usando EXPLAIN e ANALYSE:
+
+    :::bash
+    EXPLAIN ANALYSE SELECT  id, hot_score(up_score, down_score, created_at) 
+      as hot_score FROM "posts"   ORDER BY hot_score desc LIMIT 10;
+
+                            QUERY PLAN
+    ----------------------------------------------------------------------
+    Limit  (cost=2.37..2.38 rows=5 width=32) (actual time=0.874..0.876 rows=5 loops=1)
+      ->  Sort  (cost=2.37..2.38 rows=5 width=32) (actual time=0.872..0.872 rows=5 loops=1)
+         Sort Key: (hot_score(up_score, down_score, (created_at)::timestamp with time zone))
+         Sort Method: quicksort  Memory: 25kB
+         ->  Seq Scan on cards  (cost=0.00..2.31 rows=5 width=32) (actual time=0.722..0.820 rows=5 loops=1)
+    Total runtime: 0.933 ms
+
+
+Como nosso banco de testes ainda é pequeno (apenas 6 registros), temos um tempo de resposta satisfatório. Mas prevemos que o __Seq Scan__ ficará cada vez mais custoso quando a tabela crescer. Por isso na próxima parte deste texto vamos mostrar como criar um cache to __hot_score()__ e ainda resolver o problema de paginação do ranking usando [Elastic](http://www.elastic.co/) (chamado anteriormente de Elasticsearch).
+
+## Conclusão
+
+Aplicar algoritmos que criam rankings de items classificados por popularidade é crucial para os sites que funcionam como agregadores sociais. Neste texto mostramos um exemplo de como construir esse ranking usando uma função sql criada e publicada como "open source" pelo Reddit. No próximo post mostraremos como tornar essa solução em algo escalável e que resolva o problema de páginação usando Elastic.

@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 ruby '2.1.2'
 
-gem 'nesta', '0.10.0'
+gem 'nesta'
 gem 'coderay'
 gem 'rack-codehighlighter'
 gem 'thin'

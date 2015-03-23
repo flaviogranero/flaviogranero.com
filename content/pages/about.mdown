@@ -5,13 +5,17 @@ title: About - FlavioGranero
 > ![About me](/me.jpg "Flávio")
 
 I’m Flávio, a software developer and entrepreneur living in Londrina, Brazil. 
-Currently, I'm the Founder/CEO of a startup focused on providing web based CRM software to real estate agents: [TowerCRM][1].
+Currently, I work developing Ruby, Node.js and Frontend solutions at [Inaka][10].
 
 You can read occasionally new articles about software development on this [Blog][2] or follow me for frequent updates and links on [Twitter][3] and [Tumblr][4]. Although the majority of my work isn’t open source, I have a few projects on [GitHub][5], and they are waiting for your fork.
 
+I'm also doing some TDD once a month in our local [Coding Dojo meetup][9]. Come and let's code together.
+
 ## Past jobs
 
-* In the end of 2011, I released the [TowerCRM][1] first version after making it my full time project.
+* From 2012 to present, I'm working for [Inaka][10] as a full time remote developer. Inaka is a software consulting firm part of [Erlang Solutions][11], which allows me to work with several U.S. based customers and where I have a Senior Software Engineer position.
+
+* In the end of 2011, I released the [TowerCRM][1] first version after making it my full time project. TowerCRM is a startup focused on providing web based CRM software to real estate agents.
 
 * In 2008, I began in a full time remote job, working from my home-office to [SR Education Group][6] in Seattle, porting legacy code and building new SEO focused applications using mostly Ruby on Rails and Amazon EC2.
 
@@ -40,3 +44,6 @@ Aside from writing software, I'm the Elen's husband and the Murilo's father. I e
 [6]: http://www.sreducationgroup.org/
 [7]: http://tecnospeed.com.br
 [8]: http://www.linkedin.com/in/flaviogranero
+[9]: http://meetup.com/dojolondrina/
+[10]: http://inaka.net
+[11]: https://www.erlang-solutions.com
