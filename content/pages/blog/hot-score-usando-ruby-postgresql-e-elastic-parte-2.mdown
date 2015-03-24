@@ -1,0 +1,139 @@
+Date: 24 March 2015
+Categories: blog
+Summary: Segunda parte do artigo mostrando como podemos ordenar items por popularidade ao estilo Reddit, desta vez com foco em performance e paginação usando Elastic.
+
+# Ordenando por popularidade ao estilo Reddit usando Ruby, PostgreSQL e Elastic, parte 2
+
+Na [primeira parte deste artigo](/blog/hot-score-usando-ruby-postgresql-e-elastic-parte-1), mostramos como criar uma ranking ao estilo Reddit, usando Ruby e uma função SQL que foi [publicada pela próprio equipe do Reddit no Github](https://github.com/reddit/reddit/blob/master/sql/functions.sql). Mas, como queremos algo que seja escalável, ou seja, que não sofra perca de performance quando o número de posts publicados começar a crescer muito, vamos mostrar como cachear o valor do __hot_score()__ usando [Elastic](http://www.elastic.co/), evitando assim que ele seja calculado a cada solicitação. Depois, vamos resolver o problema da paginação desses items, que podem ter sua posição no ranking alterada entre as solicitações de páginas, com a função __scroll__ também oferecida pelo Elastic.
+
+## Criando um cache do hot_score para obter performance
+
+Quando o número de posts começa a aumentar, trazer os items ordenados pela resultado da função SQL __hot_score()__ torna-se muito custoso para o banco de dados, pois ele precisa calcular o valor de cada item cada vez que a lista ordenada é solicitada (mostramos uma análise mais detalhada na [primeira parte deste texto](/blog/hot-score-usando-ruby-postgresql-e-elastic-parte-1)).
+
+Com Elastic, podemos armazenar no índice o hot_score de cada Post, fazendo com que ele funcione como um cache. Para fazer isso em nossa aplicação Rails de exemplo, vamos usar a gem [searchkick](https://github.com/ankane/searchkick).
+
+Depois de instalada a gem, configuramos nosso model Post com o segunte código:
+
+    :::ruby
+    # app/models/post.rb
+    class Post < ActiveRecord:Base
+      belongs_to :user
+      # ...
+      searchkick
+      # método usado pelo searchkick para obter o json de cada item a ser salvo no índice
+      def search_data
+        if attributes.keys.include?("hot_score")
+          hot_score = self["hot_score"]
+        else
+          select_sql = "hot_score(up_score, down_score, created_at) as hot_score"
+          hot_score = Post.select(select_sql).find(id).try(:[], "hot_score")
+        end
+        {
+          name: name,
+          user_id: user_id,
+          hot_score: hot_score.to_f,
+          created_at: created_at
+        }
+      end
+
+      # método de classe utilizado para carregar os items do banco que serão armazenados no índice
+      def self.search_import
+        select("id, name, image_url, user_id, created_at, "\
+          "hot_score(up_score, down_score, created_at) as hot_score")
+      end
+    end
+
+Depois, para atualizar o cache, reconstruímos o índice usando a task rake disponibilizada pelo searchkick:
+
+    :::bash
+    rake searchkick:reindex CLASS=Post
+
+No servidor de produção, podemos criar uma entrada no [cron](http://en.wikipedia.org/wiki/Cron) para que o indíce seja atualizado a cada 5 minutos, por exemplo. Sugiro que você use a gem [whenever](http://en.wikipedia.org/wiki/Cron), que facilita o gerenciamento de tarefas no cron. Com ela, podemos ter um arquivo __schedule.rb__ com a seguinte entrada:
+
+    :::ruby
+    # config/schedule.rb
+    every 5.minutes do
+      rake "searchkick:reindex CLASS=Post"
+    end
+
+Você pode estar se perguntando porque isso é necessário, já que a gem searchkick tem funcionalidades que atualizam o registro no índice sempre que algum Post é criado ou editado, de forma automática. Acontece que o valor do __hot_score__ varia com o tempo, mesmo se um Post não é alterado. Lembre-se que a função SQL que usamos usa a data de criação da postagem para calcular o valor, gerando a escala logarítmica que desejamos. Essa tarefa do cron garante que o ranking seja atualizado a cada 5 minutos. 
+
+A partir daqui podemos alterar nosso aplicativo para fazer buscas no Elastic ao invés de trazer os Posts do banco de dados:
+
+    :::ruby
+    # mudamos as chamadas do ActiveRecord
+    Post.ranking.limit(10)
+    # para chamadas ao Elastic
+    Post.search("*", order: {hot_score: :desc}, per_page: 10)
+
+Logicamente o conjunto search_kick e Elastic nos fornece inúmeras outras opções de busca, mas aqui queremos apenas demonstrar como substituir a chamada do ActiveRecord.
+
+Paginando os items do ranking com ElasticSearch
+-----------------------------------------------
+
+Outro problema enfrentado ao criar um ranking dessa natureza refere-se a como retornar resultados paginados corretamente, quando os itens estão sendo devolvidos através da api da aplicação por exemplo.
+
+Imagine a situção: um aplicativo de smartphone solicita ao servidor a lista das 10 primeiras postagens com o maior hot_score, através da api da nossa aplicação. O usuário então faz um scroll e o aplicativo então solicita a segunda página de itens ordenados por popularidade. Acontece que, durante esse intervalo de tempo entre a primeira e a segunda requisição, a ordem dos items sofreu alterações no servidor. Novos posts podem ter sido criados, novos votos foram computados.
+
+Como então retornar a continução da lista sem perder ou duplicar items?
+
+O Elastic possui uma feature muito parecida com [cursores de bancos de dados](http://www.postgresql.org/docs/9.2/static/plpgsql-cursors.html), mas com uma performance maior e principalmente com um consumo de recursos menor. Essa feature se chama [scroll](http://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-scroll.html).
+
+Resumidamente, podemos fazer com o Elastic mantenha uma snapshot do resultado de uma busca por um tempo determinado. Basta que acrescentemos um parâmetro scroll a uma query normal. Esse parâmetro deve conter o tempo que o snapshot ficará ativa. Vejamos um examplo de requisição direta ao elastic usando `curl`:
+
+    :::bash
+    curl -XGET 'localhost:9200/twitter/tweet/_search?scroll=1m' -d '
+    {
+        "query": {
+            "match" : {
+                "title" : "elastic"
+            }
+        }
+    }
+
+Neste exemplo o Elastic retorna um valor _scroll_id_ juntamente com as repostas para a busca. Esse _scroll_id_ é válido por 1 minuto, sendo que, para obter os próximos resultados, basta fazer uma nova requisição apenas com o _scroll_id_ como parâmetro, para uma url do tipo (supondo que o _scroll_id_ retornado foi _c2Nhbjs2OzM0NDg1ODpzRlBLc0FXNlNyNm5JWUc1_):
+
+    :::bash
+    curl -XGET  'localhost:9200/_search/scroll?scroll=1m' -d 'c2Nhbjs2OzM0NDg1ODpzRlBLc0FXNlNyNm5JWUc1'
+
+Para fazer isso em ruby precisamos extender um pouco a gem searchkick para que as queries passem a suportar o parâmetro scroll (ele é removido automaticamente na versão padrão). Criamos então um arquivo de inicialização em "initializers/searchkick.rb" com o código:
+
+    :::ruby
+    # config/initializers/searchkick.rb
+    module Searchkick
+      class QueryWithScroll < Query
+        def params
+          params = super
+          params.merge!(scroll: options[:scroll]) if options[:scroll]
+          params
+        end
+      end
+    end
+
+Depois alteramos nosso código para usar essa nova classe, da seguinte maneira:
+
+    :::ruby
+    # retornando os primeiros posts do ranking com o scroll_id
+    query = Searchkick::QueryWithScroll.new(Post, "*", load: true, scroll: "5m", order: {hot_score: :desc}, per_page: 10)
+    search = query.execute
+    @posts = search.results
+    @scroll_id = search.response["_scroll_id"]
+
+Aqui solicitamos que o snapshot seja válido por 5 minutos, e salvamos os posts retornados e o __scroll_id__ para a próxima requisição em váriaveis de instância.
+
+Quando o aplicativo cliente fizer a requisição da próxima página, verificamos se o parâmetro __scroll_id__ está presente, e alteramos nosso busca para:
+
+    :::ruby
+    # obtendo a próxima página do ranking usando o scroll_id
+    response = Searchkick.client.scroll({ scroll_id: params[:scroll_id], scroll: "5m" })
+    search = Searchkick::Results.new(Post, response, {})
+    @posts = search.results
+    @scroll_id = search.response["_scroll_id"]
+
+Você pode notar que searchkick também não provê um acesso facilitado ao endpoint de scroll, mas estamos fazendo um acesso direto ao client interno e depois encapsulando o resultado numa instância de Searchkick::Results, para que fique parecido com o que fazemos na busca inicial (sem scroll_id). Note que um novo scroll_id é gerado e deve ser usado na requisição da próxima página.
+
+## Conclusão
+
+A ordenação de items com __hot_score__ é uma técnica muito utilizada atualmente para aplicações onde novos items são adionados com frequência, e esses items são ordenados usando por um cálculo feito a partir do votos recebidos. Para dar oportunidade a items recentes aparecerem bem posicionados, os agregadores sociais como o Reddit fazem uso de algorithmos de hot_score para ter um ranking atualizado e que atraia visitantes para novos conteúdos de qualidade.
+
+Esse artigo encerra nosso exemplo, mostrando como é possível usar uma função SQL juntamente com elastic em uma aplicação Ruby on Rails, para ter um ranking sem problemas de performance e escalável, permitindo resultados paginados sem perdas ou duplicações.
