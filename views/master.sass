@@ -4,7 +4,7 @@
 
 // Variables
 
-$content-width: 37em
+$content-width: 100%
 
 $border-style: 1px dashed $border-color
 
@@ -23,6 +23,9 @@ body
   font: ($base-font * 1.05) Georgia, serif
   line-height: $vertical-rhythm
   color: $base-color
+  @include breakpoint(mobileonly)
+    font: (($base-font-mobile) * 1.05) Georgia, serif
+    line-height: $vertical-rhythm
 
 header[role=banner]
   font-family: 'Droid Serif', Georgia, serif
@@ -60,7 +63,7 @@ ol,
 p,
 pre,
 ul
-  margin: 10px 0px
+  margin: 1em
   //margin-bottom: $base-vertical-margin
 
 li
@@ -93,8 +96,8 @@ article, aside, footer, header, nav, section
   display: block
 
 div#container
-  //width: 54em
-  width: 37em
+  width: 90%
+  max-width: 800px
   margin: 0 auto
   padding: 1em 1em 0 1em
 
@@ -181,11 +184,14 @@ article
     border: 1px solid 
     border-color: $disabled-border-color
     padding: 3px
+    display: block
     //margin-bottom: $base-vertical-margin
   blockquote
     img
       margin: 5px
       float: right
+      @include breakpoint(mobileonly)
+        max-width: 50%
 
   code,
   pre

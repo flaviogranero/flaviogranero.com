@@ -9,10 +9,13 @@ $h4-scale: 1.18
 // Variables used in calculations used to maintain vertical rhythm.
 // http://webtypography.net/Rhythm_and_Proportion/Vertical_Motion/2.2.2/
 
-$base-scale: 0.88
+$base-scale: 1
 $base-font: $base-scale * 1em
 $vertical-rhythm: 1.75em
 $base-vertical-margin: 1.75em
+
+$base-scale-mobile: 0.9
+$base-font-mobile: $base-scale-mobile * 1em
 
 @mixin adjust-font-size($scale, $top-weight: 1, $bottom-weight: 1)
   $average-margin: $base-vertical-margin / $scale
@@ -26,6 +29,9 @@ $base-vertical-margin: 1.75em
     line-height: $line-height
 
   font-size: 100% * $scale
+  @media (max-width: 37.5em)
+    font-size: 90% * $scale
+    line-height: $line-height * 1.5
 
 @mixin border-radius($radius)
   -webkit-border-radius: $radius
@@ -37,3 +43,22 @@ $base-vertical-margin: 1.75em
   -o-transition: $definition
   -webkit-transition: $definition
   transition: $definition
+
+// BREAKPOINTS
+
+@mixin breakpoint($point)
+  @if $point == desktop
+    @media (min-width: 70em)
+      @content
+  @else if $point == laptop
+    @media (min-width: 64em)
+      @content
+  @else if $point == tablet
+    @media (min-width: 50em)
+      @content
+  @else if $point == phablet
+    @media (min-width: 37.5em)
+      @content
+  @else if $point == mobileonly
+    @media (max-width: 37.5em)
+      @content
