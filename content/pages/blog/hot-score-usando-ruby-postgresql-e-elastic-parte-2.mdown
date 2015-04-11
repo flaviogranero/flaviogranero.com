@@ -1,8 +1,10 @@
-Date: 24 March 2015
+Date: 01 April 2015
 Categories: blog
 Summary: Segunda parte do artigo mostrando como podemos ordenar items por popularidade ao estilo Reddit, desta vez com foco em performance e paginação usando Elastic.
 
 # Ordenando por popularidade ao estilo Reddit usando Ruby, PostgreSQL e Elastic, parte 2
+
+> This post was originally published at inaka blog as: [Sorting by popularity like Reddit with Ruby, PostgreSQL and Elastic, part 2](http://inaka.net/blog/2015/04/01/hot-score-with-ruby-postgresql-and-elastic-part-2/)
 
 Na [primeira parte deste artigo](/blog/hot-score-usando-ruby-postgresql-e-elastic-parte-1), mostramos como criar uma ranking ao estilo Reddit, usando Ruby e uma função SQL que foi [publicada pela próprio equipe do Reddit no Github](https://github.com/reddit/reddit/blob/master/sql/functions.sql). Mas, como queremos algo que seja escalável, ou seja, que não sofra perca de performance quando o número de posts publicados começar a crescer muito, vamos mostrar como cachear o valor do __hot_score()__ usando [Elastic](http://www.elastic.co/), evitando assim que ele seja calculado a cada solicitação. Depois, vamos resolver o problema da paginação desses items, que podem ter sua posição no ranking alterada entre as solicitações de páginas, com a função __scroll__ também oferecida pelo Elastic.
 
@@ -48,7 +50,7 @@ Depois, para atualizar o cache, reconstruímos o índice usando a task rake disp
     :::bash
     rake searchkick:reindex CLASS=Post
 
-No servidor de produção, podemos criar uma entrada no [cron](http://en.wikipedia.org/wiki/Cron) para que o indíce seja atualizado a cada 5 minutos, por exemplo. Sugiro que você use a gem [whenever](http://en.wikipedia.org/wiki/Cron), que facilita o gerenciamento de tarefas no cron. Com ela, podemos ter um arquivo __schedule.rb__ com a seguinte entrada:
+No servidor de produção, podemos criar uma entrada no [cron](http://en.wikipedia.org/wiki/Cron) para que o indíce seja atualizado a cada 5 minutos, por exemplo. Sugiro que você use a gem [whenever](https://github.com/javan/whenever), que facilita o gerenciamento de tarefas no cron. Com ela, podemos ter um arquivo __schedule.rb__ com a seguinte entrada:
 
     :::ruby
     # config/schedule.rb
@@ -68,8 +70,7 @@ A partir daqui podemos alterar nosso aplicativo para fazer buscas no Elastic ao 
 
 Logicamente o conjunto search_kick e Elastic nos fornece inúmeras outras opções de busca, mas aqui queremos apenas demonstrar como substituir a chamada do ActiveRecord.
 
-Paginando os items do ranking com ElasticSearch
------------------------------------------------
+## Paginando os items do ranking com ElasticSearch
 
 Outro problema enfrentado ao criar um ranking dessa natureza refere-se a como retornar resultados paginados corretamente, quando os itens estão sendo devolvidos através da api da aplicação por exemplo.
 

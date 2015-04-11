@@ -4,6 +4,8 @@ Summary: Primeira parte do artigo mostrando como podemos ordenar items por popul
 
 # Ordenando por popularidade ao estilo Reddit usando Ruby, PostgreSQL e Elastic, parte 1
 
+> This post was originally published at inaka blog as: [Sorting by popularity like Reddit with Ruby, PostgreSQL and Elastic, part 1](http://inaka.net/blog/2015/03/25/hot-score-with-ruby-postgresql-and-elastic-part-1/)
+
 Tomemos como exemplo um aplicativo simples, onde usuários podem postar imagens, e essas imagens podem receber votos positivos (upvotes) e votos negativos (downvotes). Algo como uma versão simplificada do [Imgur](http://imgur.com/), mas que mesmo simples ainda tenha que lidar com um grande volume de novas postagens periodicamente. Uma das funcionalidades principais desse aplicativo seria mostrar uma __lista de imagens ordenada por popularidade__ na sua página principal.
 
 ## Ordenação simples pelo Score
@@ -95,4 +97,6 @@ Como nosso banco de testes ainda é pequeno (apenas 6 registros), temos um tempo
 
 ## Conclusão
 
-Aplicar algoritmos que criam rankings de items classificados por popularidade é crucial para os sites que funcionam como agregadores sociais. Neste texto mostramos um exemplo de como construir esse ranking usando uma função sql criada e publicada como "open source" pelo Reddit. No próximo post mostraremos como tornar essa solução em algo escalável e que resolva o problema de páginação usando Elastic.
+Aplicar algoritmos que criam rankings de items classificados por popularidade é crucial para os sites que funcionam como agregadores sociais. Neste texto mostramos um exemplo de como construir esse ranking usando uma função sql criada e publicada como "open source" pelo Reddit. [No próximo post](/blog/hot-score-usando-ruby-postgresql-e-elastic-parte-2) mostraremos como tornar essa solução em algo escalável e que resolva o problema de páginação usando Elastic.
+
+[Leia a segunda parte desse post.](/blog/hot-score-usando-ruby-postgresql-e-elastic-parte-2)
